@@ -6,14 +6,21 @@ from streamlit.testing.v1 import AppTest
 
 ROOT = Path(__file__).resolve().parents[1]
 APP = ROOT / "app.py"
-SHOWCASE = ROOT / "showcase_v2.py"
+SHOWCASE = ROOT / "showcase_v3.py"
+HTML = ROOT / "frontend" / "showcase.html"
+CSS = ROOT / "frontend" / "showcase.css"
+JS = ROOT / "frontend" / "showcase.js"
 WORDMARK = ROOT / "assets" / "brand" / "abiq_wordmark.webp"
 IQ_MARK = ROOT / "assets" / "brand" / "abiq_iq_hero.webp"
-STONE = ROOT / "assets" / "textures" / "abiq_stone_smooth.webp"
+BASE_TEXTURE = ROOT / "assets" / "textures" / "abiq_texture_base.webp"
+ACCENT_TEXTURE = ROOT / "assets" / "textures" / "abiq_texture_accent.webp"
 
 
 def _public_source() -> str:
-    return APP.read_text(encoding="utf-8") + SHOWCASE.read_text(encoding="utf-8")
+    return "\n".join(
+        path.read_text(encoding="utf-8")
+        for path in (APP, SHOWCASE, HTML, CSS, JS)
+    )
 
 
 def test_public_app_contains_no_private_runtime_hooks() -> None:
@@ -35,27 +42,40 @@ def test_public_app_contains_no_private_runtime_hooks() -> None:
 
 def test_public_app_compiles_and_runs() -> None:
     compile(APP.read_text(encoding="utf-8"), "app.py", "exec")
-    compile(SHOWCASE.read_text(encoding="utf-8"), "showcase_v2.py", "exec")
+    compile(SHOWCASE.read_text(encoding="utf-8"), "showcase_v3.py", "exec")
     app = AppTest.from_file(APP, default_timeout=20).run()
     assert not app.exception
 
 
-def test_showcase_uses_abiq_parity_shell() -> None:
+def test_showcase_uses_streamlit_v2_component_contract() -> None:
     source = SHOWCASE.read_text(encoding="utf-8")
-    assert 'id="dashboard" class="page active"' in source
-    assert "Edge comes from<br>process, not predictions." in source
-    assert "Model Recommendations" in source
-    assert "Static portfolio example" in source
-    assert "Analytics engineered into a product" in source
-    assert 'class="hero-iq"' in source
-    assert '.hero-iq{width:155px;right:2%;opacity:.74}' in source
-    assert '.kpi:last-child{grid-column:1/-1}' in source
+    assert "st.components.v2.component(" in source
+    assert 'name="abiq_public_showcase_v3"' in source
+    assert "isolate_styles=True" in source
+    assert 'height="content"' in source
+    assert 'base_texture_data_uri' in source
+    assert 'accent_texture_data_uri' in source
 
 
-def test_high_fidelity_brand_assets_are_packaged() -> None:
+def test_component_reuses_abiq_material_runtime() -> None:
+    css = CSS.read_text(encoding="utf-8")
+    js = JS.read_text(encoding="utf-8")
+    html = HTML.read_text(encoding="utf-8")
+    assert 'id="abiq-dashboard-root" class="abiq-app"' in html
+    assert "--base-texture:none" in css
+    assert "--accent-texture:none" in css
+    assert "var(--base-texture)" in css
+    assert "var(--accent-texture)" in css
+    assert "setProperty('--base-texture'" in js
+    assert "setProperty('--accent-texture'" in js
+    assert ".abiq-kpi:last-child{grid-column:1/-1}" in css
+
+
+def test_high_fidelity_assets_and_material_textures_are_packaged() -> None:
     assert WORDMARK.exists() and WORDMARK.stat().st_size > 5000
     assert IQ_MARK.exists() and IQ_MARK.stat().st_size > 5000
-    assert STONE.exists() and STONE.stat().st_size > 500
+    assert BASE_TEXTURE.exists() and BASE_TEXTURE.stat().st_size > 4000
+    assert ACCENT_TEXTURE.exists() and ACCENT_TEXTURE.stat().st_size > 4000
 
 
 def test_static_team_logo_treatment_matches_private_product_pattern() -> None:
@@ -63,23 +83,19 @@ def test_static_team_logo_treatment_matches_private_product_pattern() -> None:
     assert "https://a.espncdn.com/i/teamlogos/nfl/500/" in source
     for team in ("ARI", "CLE", "DET", "JAX", "LAC", "NO", "PHI", "WAS"):
         assert f'"{team}"' in source
-    assert 'class="team-logo"' in source
-    assert 'class="rec-logo"' in source
+    js = JS.read_text(encoding="utf-8")
+    assert "abiq-team-cell" in js
+    assert "abiq-rec-team" in js
 
 
-def test_secondary_pages_have_explicit_backfill_and_contrast() -> None:
-    source = SHOWCASE.read_text(encoding="utf-8")
-    assert ".surface-alt{" in source
-    assert ".pipe{" in source
-    assert ".pipe:nth-child(even)" in source
-    assert "surface-alt" in source
-
-
-def test_streamlit_chrome_is_suppressed_where_platform_allows() -> None:
-    source = SHOWCASE.read_text(encoding="utf-8")
-    assert '[data-testid="stToolbar"]' in source
-    assert '[data-testid="stStatusWidget"]' in source
-    assert "stDeployButton" in source
+def test_secondary_pages_share_surface_system_with_controlled_contrast() -> None:
+    html = HTML.read_text(encoding="utf-8")
+    css = CSS.read_text(encoding="utf-8")
+    for page in ("Dashboard", "Weekly Outlook", "Model Performance", "Platform"):
+        assert f'data-page="{page}"' in html
+    assert ".abiq-secondary-surface" in css
+    assert ".abiq-pipe:nth-child(even)" in css
+    assert "abiq-secondary-surface" in html
 
 
 def test_validation_claims_are_locked_in_source() -> None:
