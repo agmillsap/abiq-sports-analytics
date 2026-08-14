@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 220" role="img" aria-labelledby="title">
+  <title id="title">ABIQ IQ mark</title>
+  <defs>
+    <linearGradient id="copper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f0b18a"/>
+      <stop offset=".32" stop-color="#d9885a"/>
+      <stop offset=".68" stop-color="#a85734"/>
+      <stop offset="1" stop-color="#e39a6d"/>
+    </linearGradient>
+  </defs>
+  <text x="10" y="165" fill="url(#copper)" font-family="Georgia, 'Times New Roman', serif" font-size="165" letter-spacing="-12">IQ</text>
+  <g fill="url(#copper)">
+    <rect x="168" y="140" width="7" height="16" rx="1"/>
+    <rect x="179" y="133" width="7" height="23" rx="1"/>
+    <rect x="190" y="124" width="7" height="32" rx="1"/>
+  </g>
+  <path d="M191 159 C217 166 239 160 256 145" fill="none" stroke="url(#copper)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M253 143 L270 141 L260 157 Z" fill="#dc8d5e"/>
+</svg>
