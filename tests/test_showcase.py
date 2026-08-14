@@ -165,8 +165,10 @@ def test_performance_workflow_headers_have_stronger_hierarchy() -> None:
 def test_dashboard_uses_interpretable_brier_probability_quality_kpi() -> None:
     source = SHOWCASE.read_text(encoding="utf-8")
     assert '"title": "PROBABILITY QUALITY", "value": "0.2144"' in source
-    assert '"subtext": "Brier score · 0 best / 1 worst"' in source
-    assert "squared probability error penalizes confidently wrong forecasts more heavily" in source
+    assert '"subtext": "Brier score · 0 perfect / 1 max inaccuracy"' in source
+    assert "Brier score measures how accurate the model's predicted probabilities are." in source
+    assert "0 is perfect and 1 represents maximum inaccuracy" in source
+    assert "Confidently wrong forecasts are penalized more severely than cautious misses." in source
 
 
 def test_validation_claims_are_locked_in_source() -> None:
