@@ -162,6 +162,13 @@ def test_performance_workflow_headers_have_stronger_hierarchy() -> None:
     assert "font-size: 11px !important" in css
 
 
+def test_dashboard_uses_interpretable_brier_probability_quality_kpi() -> None:
+    source = SHOWCASE.read_text(encoding="utf-8")
+    assert '"title": "PROBABILITY QUALITY", "value": "0.2144"' in source
+    assert '"subtext": "Brier score · 0 best / 1 worst"' in source
+    assert "squared probability error penalizes confidently wrong forecasts more heavily" in source
+
+
 def test_validation_claims_are_locked_in_source() -> None:
     source = SHOWCASE.read_text(encoding="utf-8")
     assert '"games": 272' in source
