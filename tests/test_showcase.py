@@ -7,6 +7,7 @@ from streamlit.testing.v1 import AppTest
 ROOT = Path(__file__).resolve().parents[1]
 APP = ROOT / "app.py"
 SHOWCASE = ROOT / "showcase_v3.py"
+README = ROOT / "README.md"
 BASE_CSS = ROOT / "frontend" / "showcase.css"
 HTML = ROOT / "frontend" / "showcase_exec.html"
 CSS = ROOT / "frontend" / "showcase_exec.css"
@@ -159,6 +160,23 @@ def test_new_forecast_visual_text_respects_readability_floor() -> None:
         assert selector in css
     assert "font-size: 10px" in css
     assert "font-size: 10.5px" in css
+
+
+def test_public_showcase_weekly_football_data_is_frozen() -> None:
+    source = SHOWCASE.read_text(encoding="utf-8")
+    readme = README.read_text(encoding="utf-8")
+    assert '"current_week": 1' in source
+    assert '"weeks": [{"week": 1, "label": "2026 · Week 1"}]' in source
+    assert "football/team content is intentionally frozen" in source
+    assert "not a weekly data feed" in readme
+    assert "Only accepted historical model-performance evidence may be updated" in readme
+
+    workflow_files = list((ROOT / ".github" / "workflows").glob("*.yml"))
+    workflow_files += list((ROOT / ".github" / "workflows").glob("*.yaml"))
+    for workflow_file in workflow_files:
+        workflow_text = workflow_file.read_text(encoding="utf-8").casefold()
+        assert "schedule:" not in workflow_text
+        assert "cron:" not in workflow_text
 
 
 def test_performance_combines_validation_and_platform_story() -> None:
