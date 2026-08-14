@@ -10,6 +10,7 @@ SHOWCASE = ROOT / "showcase_v3.py"
 BASE_CSS = ROOT / "frontend" / "showcase.css"
 HTML = ROOT / "frontend" / "showcase_exec.html"
 CSS = ROOT / "frontend" / "showcase_exec.css"
+TYPOGRAPHY = ROOT / "frontend" / "typography.css"
 JS = ROOT / "frontend" / "showcase_exec.js"
 WORDMARK = ROOT / "assets" / "brand" / "abiq_wordmark.webp"
 IQ_MARK = ROOT / "assets" / "brand" / "abiq_iq_hero.webp"
@@ -20,7 +21,7 @@ ACCENT_TEXTURE = ROOT / "assets" / "textures" / "abiq_texture_accent.webp"
 def _public_source() -> str:
     return "\n".join(
         path.read_text(encoding="utf-8")
-        for path in (APP, SHOWCASE, HTML, BASE_CSS, CSS, JS)
+        for path in (APP, SHOWCASE, HTML, BASE_CSS, CSS, TYPOGRAPHY, JS)
     )
 
 
@@ -54,6 +55,7 @@ def test_showcase_uses_streamlit_v2_component_contract() -> None:
     assert 'name="abiq_public_showcase_v4"' in source
     assert 'showcase_exec.html' in source
     assert 'showcase_exec.css' in source
+    assert 'typography.css' in source
     assert 'showcase_exec.js' in source
     assert "isolate_styles=True" in source
     assert 'height="content"' in source
@@ -131,6 +133,42 @@ def test_performance_combines_validation_and_platform_story() -> None:
     assert 'id="abiq-platform-pipeline"' in html
     assert "renderPipeline(parentElement, data)" in js
     assert "renderPerformance(parentElement, data)" in js
+
+
+def test_showcase_typography_has_10px_readability_floor() -> None:
+    css = TYPOGRAPHY.read_text(encoding="utf-8")
+    assert "font-size: 10px !important" in css
+    for selector in (
+        ".abiq-kpi-title",
+        ".abiq-kpi-sub",
+        ".abiq-panel-heading",
+        ".abiq-team-prob",
+        ".abiq-kickoff",
+        ".abiq-rec-sub",
+        ".abiq-confidence span",
+        ".abiq-page-head p",
+        ".abiq-metric-label",
+        ".abiq-metric-detail",
+    ):
+        assert selector in css
+
+
+def test_performance_workflow_headers_have_stronger_hierarchy() -> None:
+    css = TYPOGRAPHY.read_text(encoding="utf-8")
+    assert ".abiq-pipe-num" in css
+    assert "font-size: 11.5px !important" in css
+    assert "font-weight: 650" in css
+    assert ".abiq-pipe-copy" in css
+    assert "font-size: 11px !important" in css
+
+
+def test_dashboard_uses_interpretable_brier_probability_quality_kpi() -> None:
+    source = SHOWCASE.read_text(encoding="utf-8")
+    assert '"title": "PROBABILITY QUALITY", "value": "0.2144"' in source
+    assert '"subtext": "Brier score · 0 perfect / 1 maximum inaccuracy"' in source
+    assert "Brier score measures how accurate the model's predicted probabilities are." in source
+    assert "0 is perfect and 1 represents maximum inaccuracy" in source
+    assert "Confidently wrong forecasts are penalized more severely than cautious misses." in source
 
 
 def test_validation_claims_are_locked_in_source() -> None:

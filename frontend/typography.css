@@ -1,0 +1,73 @@
+/* Executive readability floor for the public Showcase.
+   Keep all visible supporting text at or above 10px while preserving
+   the locked production-parity geometry in showcase.css. */
+
+.abiq-brand-meaning,
+.abiq-brand-meaning b,
+.abiq-profile-avatar,
+.abiq-profile-sub,
+.abiq-greeting-sub,
+.abiq-static-pill,
+.abiq-week-control select,
+.abiq-eyebrow,
+.abiq-outline-button,
+.abiq-kpi-title,
+.abiq-kpi-sub,
+.abiq-panel-heading,
+.abiq-panel-heading button,
+.abiq-team-code,
+.abiq-team-prob,
+.abiq-kickoff,
+.abiq-rec-name,
+.abiq-rec-sub,
+.abiq-rec-probability,
+.abiq-rec-probability span,
+.abiq-confidence,
+.abiq-confidence span,
+.abiq-disclosure,
+.abiq-page-head p,
+.abiq-takeaway p,
+.abiq-story p,
+.abiq-bar-row,
+.abiq-metric-label,
+.abiq-metric-detail,
+.abiq-pipe-copy {
+  font-size: 10px !important;
+}
+
+/* The Performance workflow should read like an executive process map,
+   not fine-print metadata. */
+.abiq-pipe-num {
+  font-size: 11.5px !important;
+  line-height: 1.25;
+  letter-spacing: .14em;
+  font-weight: 650;
+  color: #9f6040;
+}
+
+.abiq-pipe-copy {
+  font-size: 11px !important;
+  line-height: 1.55;
+}
+
+.abiq-page-head p,
+.abiq-takeaway p,
+.abiq-story p,
+.abiq-metric-detail {
+  font-size: 10.5px !important;
+}
+
+.abiq-greeting-sub {
+  font-size: 10.5px !important;
+}
+
+@media (max-width: 860px) {
+  /* Mobile keeps the same minimum readability standard. */
+  .abiq-pipe-num {
+    font-size: 11px !important;
+  }
+
+  .abiq-pipe-copy {
+    font-size: 10.5px !important;
+  }
+}
