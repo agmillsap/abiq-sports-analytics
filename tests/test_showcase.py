@@ -7,9 +7,10 @@ from streamlit.testing.v1 import AppTest
 ROOT = Path(__file__).resolve().parents[1]
 APP = ROOT / "app.py"
 SHOWCASE = ROOT / "showcase_v3.py"
-HTML = ROOT / "frontend" / "showcase.html"
-CSS = ROOT / "frontend" / "showcase.css"
-JS = ROOT / "frontend" / "showcase.js"
+BASE_CSS = ROOT / "frontend" / "showcase.css"
+HTML = ROOT / "frontend" / "showcase_exec.html"
+CSS = ROOT / "frontend" / "showcase_exec.css"
+JS = ROOT / "frontend" / "showcase_exec.js"
 WORDMARK = ROOT / "assets" / "brand" / "abiq_wordmark.webp"
 IQ_MARK = ROOT / "assets" / "brand" / "abiq_iq_hero.webp"
 BASE_TEXTURE = ROOT / "assets" / "textures" / "abiq_texture_base.webp"
@@ -19,7 +20,7 @@ ACCENT_TEXTURE = ROOT / "assets" / "textures" / "abiq_texture_accent.webp"
 def _public_source() -> str:
     return "\n".join(
         path.read_text(encoding="utf-8")
-        for path in (APP, SHOWCASE, HTML, CSS, JS)
+        for path in (APP, SHOWCASE, HTML, BASE_CSS, CSS, JS)
     )
 
 
@@ -50,7 +51,10 @@ def test_public_app_compiles_and_runs() -> None:
 def test_showcase_uses_streamlit_v2_component_contract() -> None:
     source = SHOWCASE.read_text(encoding="utf-8")
     assert "st.components.v2.component(" in source
-    assert 'name="abiq_public_showcase_v3"' in source
+    assert 'name="abiq_public_showcase_v4"' in source
+    assert 'showcase_exec.html' in source
+    assert 'showcase_exec.css' in source
+    assert 'showcase_exec.js' in source
     assert "isolate_styles=True" in source
     assert 'height="content"' in source
     assert 'base_texture_data_uri' in source
@@ -58,17 +62,17 @@ def test_showcase_uses_streamlit_v2_component_contract() -> None:
 
 
 def test_component_reuses_abiq_material_runtime() -> None:
-    css = CSS.read_text(encoding="utf-8")
+    base_css = BASE_CSS.read_text(encoding="utf-8")
     js = JS.read_text(encoding="utf-8")
     html = HTML.read_text(encoding="utf-8")
     assert 'id="abiq-dashboard-root" class="abiq-app"' in html
-    assert "--base-texture:none" in css
-    assert "--accent-texture:none" in css
-    assert "var(--base-texture)" in css
-    assert "var(--accent-texture)" in css
+    assert "--base-texture:none" in base_css
+    assert "--accent-texture:none" in base_css
+    assert "var(--base-texture)" in base_css
+    assert "var(--accent-texture)" in base_css
     assert "setProperty('--base-texture'" in js
     assert "setProperty('--accent-texture'" in js
-    assert ".abiq-kpi:last-child{grid-column:1/-1}" in css
+    assert ".abiq-kpi:last-child{grid-column:1/-1}" in base_css
 
 
 def test_high_fidelity_assets_and_material_textures_are_packaged() -> None:
@@ -88,14 +92,45 @@ def test_static_team_logo_treatment_matches_private_product_pattern() -> None:
     assert "abiq-rec-team" in js
 
 
-def test_secondary_pages_share_surface_system_with_controlled_contrast() -> None:
+def test_showcase_is_exactly_three_executive_pages() -> None:
+    html = HTML.read_text(encoding="utf-8")
+    js = JS.read_text(encoding="utf-8")
+    for page in ("Dashboard", "Forecasts", "Performance"):
+        assert f'data-page="{page}"' in html
+        assert f'["{page}",' in js
+    for retired_page in ("Weekly Outlook", "Model Performance", "Platform"):
+        assert f'data-page="{retired_page}"' not in html
+        assert f'["{retired_page}",' not in js
+
+
+def test_secondary_page_headers_use_iq_watermark_treatment() -> None:
     html = HTML.read_text(encoding="utf-8")
     css = CSS.read_text(encoding="utf-8")
-    for page in ("Dashboard", "Weekly Outlook", "Model Performance", "Platform"):
-        assert f'data-page="{page}"' in html
-    assert ".abiq-secondary-surface" in css
-    assert ".abiq-pipe:nth-child(even)" in css
-    assert "abiq-secondary-surface" in html
+    assert html.count('class="abiq-page-watermark"') == 2
+    assert ".abiq-page-watermark" in css
+    assert "opacity: .12" in css
+    assert "width: min(46%, 430px)" in css
+    assert "@media (max-width: 860px)" in css
+    assert "opacity: .10" in css
+
+
+def test_public_framing_centers_forecasting_not_survivor_strategy() -> None:
+    source = _public_source()
+    assert "WEEKLY FORECAST · RISK INTELLIGENCE" in source
+    assert "UPSET WATCH" in source
+    assert '"GAMES FORECAST"' in source
+    assert '"Risk"' in source
+    assert "survivor entries" not in source.casefold()
+
+
+def test_performance_combines_validation_and_platform_story() -> None:
+    html = HTML.read_text(encoding="utf-8")
+    js = JS.read_text(encoding="utf-8")
+    assert "VALIDATION · ENGINEERING · TRUST" in html
+    assert "HOW ABIQ WORKS" in html
+    assert 'id="abiq-platform-pipeline"' in html
+    assert "renderPipeline(parentElement, data)" in js
+    assert "renderPerformance(parentElement, data)" in js
 
 
 def test_validation_claims_are_locked_in_source() -> None:
