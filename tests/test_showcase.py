@@ -87,11 +87,12 @@ def test_high_fidelity_assets_and_material_textures_are_packaged() -> None:
 def test_static_team_logo_treatment_matches_private_product_pattern() -> None:
     source = SHOWCASE.read_text(encoding="utf-8")
     assert "https://a.espncdn.com/i/teamlogos/nfl/500/" in source
-    for team in ("ARI", "CLE", "DET", "JAX", "LAC", "NO", "PHI", "WAS"):
+    for team in ("ARI", "CIN", "CLE", "DET", "JAX", "LAC", "NO", "PHI", "TB", "WAS"):
         assert f'"{team}"' in source
     js = JS.read_text(encoding="utf-8")
     assert "abiq-team-cell" in js
     assert "abiq-rec-team" in js
+    assert "abiq-logo-pair" in js
 
 
 def test_showcase_is_exactly_three_executive_pages() -> None:
@@ -119,10 +120,45 @@ def test_secondary_page_headers_use_iq_watermark_treatment() -> None:
 def test_public_framing_centers_forecasting_not_survivor_strategy() -> None:
     source = _public_source()
     assert "WEEKLY FORECAST · RISK INTELLIGENCE" in source
-    assert "UPSET WATCH" in source
+    assert "UPSET ALERTS" in source
     assert '"GAMES FORECAST"' in source
     assert '"Risk"' in source
     assert "survivor entries" not in source.casefold()
+
+
+def test_forecasts_page_uses_visual_decision_surfaces() -> None:
+    html = HTML.read_text(encoding="utf-8")
+    css = CSS.read_text(encoding="utf-8")
+    js = JS.read_text(encoding="utf-8")
+    for element_id in ("abiq-forecast-board", "abiq-upset-matrix", "abiq-upset-alerts"):
+        assert f'id="{element_id}"' in html
+    assert "renderForecastBoard(parentElement, data)" in js
+    assert "renderUpsetMatrix(parentElement, data)" in js
+    assert "renderUpsetAlerts(parentElement, data)" in js
+    assert "200 - 2 * probability" in js
+    assert "createElementNS" in js
+    assert ".abiq-forecast-visual-grid" in css
+    assert ".abiq-upset-alert-grid" in css
+    assert ".abiq-upset-dot.high" in css
+    assert "not a betting edge or a separate live model" in html
+    assert "plotly" not in _public_source().casefold()
+
+
+def test_new_forecast_visual_text_respects_readability_floor() -> None:
+    css = CSS.read_text(encoding="utf-8")
+    for selector in (
+        ".abiq-visual-heading > span",
+        ".abiq-forecast-matchup span",
+        ".abiq-forecast-signal-top span",
+        ".abiq-forecast-confidence",
+        ".abiq-chart-tick",
+        ".abiq-chart-note",
+        ".abiq-upset-tier",
+        ".abiq-upset-meta",
+    ):
+        assert selector in css
+    assert "font-size: 10px" in css
+    assert "font-size: 10.5px" in css
 
 
 def test_performance_combines_validation_and_platform_story() -> None:
