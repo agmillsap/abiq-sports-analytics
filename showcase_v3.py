@@ -126,7 +126,7 @@ def _payload() -> dict[str, object]:
             {"icon": "shield", "title": "CONFIDENCE LEVEL", "value": "High", "subtext": "Strongest weekly tier"},
             {"icon": "check", "title": "GAMES FORECAST", "value": "16", "subtext": "Full weekly slate"},
             {"icon": "target", "title": "REPLAY ACCURACY", "value": "66.05%", "subtext": "2025 point-in-time replay"},
-            {"icon": "bars", "title": "PROBABILITY QUALITY", "value": "0.2144", "subtext": "Brier score · 0 perfect / 1 max inaccuracy"},
+            {"icon": "bars", "title": "PROBABILITY QUALITY", "value": "0.2144", "subtext": "Brier score · 0 perfect / 1 absolute inaccuracy"},
         ],
         "games": [
             _game("ARI", 0.1812, "LAC", 0.8105, "4:25 PM ET"),
@@ -150,7 +150,7 @@ def _payload() -> dict[str, object]:
         "performance_metrics": [
             {"label": "NFL REPLAY", "value": "272 games", "detail": "18-week expanding 2025 regular-season replay"},
             {"label": "WINNER ACCURACY", "value": "66.05%", "detail": "179 of 271 non-tie winners"},
-            {"label": "PROBABILITY QUALITY", "value": "0.2144", "detail": "Brier score measures how accurate the model's predicted probabilities are. It ranges from 0 to 1, where 0 is perfect and 1 represents maximum inaccuracy. Confidently wrong forecasts are penalized more severely than cautious misses."},
+            {"label": "PROBABILITY QUALITY", "value": "0.2144", "detail": "Brier score measures how accurate the model's predicted probabilities are. It ranges from 0 to 1, where 0 is perfect and 1 represents absolute inaccuracy. Confidently wrong forecasts are penalized more severely than cautious misses."},
             {"label": "TEMPORAL INTEGRITY", "value": "0 violations", "detail": "37 prediction-time football features"},
         ],
         "fantasy_holdout": [
