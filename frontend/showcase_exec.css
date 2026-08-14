@@ -1,0 +1,150 @@
+/* Executive Showcase IA overrides.
+   Intentionally does not alter the locked desktop Dashboard geometry. */
+
+.abiq-exec-head {
+  position: relative;
+  min-height: 176px;
+  overflow: hidden;
+  align-items: center;
+}
+
+.abiq-exec-copy {
+  position: relative;
+  z-index: 3;
+  width: min(68%, 760px);
+}
+
+.abiq-page-watermark {
+  position: absolute !important;
+  z-index: 1 !important;
+  right: 3.5%;
+  top: 50%;
+  width: min(46%, 430px);
+  height: auto;
+  transform: translateY(-50%);
+  opacity: .12;
+  filter: saturate(.82) brightness(.88);
+  pointer-events: none;
+}
+
+.abiq-performance-flow {
+  margin-top: 12px;
+}
+
+.abiq-flow-heading {
+  padding: 4px 2px 8px;
+}
+
+.abiq-flow-heading h3 {
+  margin: 5px 0 0;
+  color: #d9d3cb;
+  font-family: Georgia,"Times New Roman",serif;
+  font-size: 22px;
+  line-height: 1.15;
+  font-weight: 400;
+}
+
+/* Keep secondary surfaces visually related but not identical. */
+.abiq-page-performance .abiq-feature-grid .abiq-metric-card:nth-child(even),
+.abiq-page-performance .abiq-exec-pipeline .abiq-pipe:nth-child(even) {
+  background-color: #151717;
+  background-image:
+    linear-gradient(145deg,rgba(4,5,5,.11),rgba(10,11,11,.025)),
+    var(--base-texture);
+}
+
+@media (max-width: 860px) {
+  /* Mobile-only refinement. Dashboard desktop rules remain untouched. */
+  .abiq-exec-head {
+    min-height: 184px;
+    padding: 20px 18px 18px;
+    align-items: flex-start;
+  }
+
+  .abiq-exec-copy {
+    width: 79%;
+    max-width: 79%;
+  }
+
+  .abiq-exec-head h2 {
+    margin-top: 6px;
+    font-size: 27px;
+    line-height: 1.06;
+  }
+
+  .abiq-exec-head p {
+    max-width: 100%;
+    margin-top: 8px;
+    font-size: 9.8px;
+    line-height: 1.48;
+  }
+
+  .abiq-exec-head .abiq-eyebrow {
+    margin-bottom: 6px;
+    font-size: 7.2px;
+    line-height: 1.3;
+  }
+
+  .abiq-page-watermark {
+    right: -10%;
+    top: 56%;
+    width: 58%;
+    opacity: .10;
+    filter: saturate(.74) brightness(.82);
+  }
+
+  .abiq-flow-heading {
+    padding: 4px 2px 7px;
+  }
+
+  .abiq-flow-heading .abiq-eyebrow {
+    margin-bottom: 5px;
+    font-size: 7px;
+  }
+
+  .abiq-flow-heading h3 {
+    margin-top: 0;
+    font-size: 20px;
+    line-height: 1.12;
+  }
+
+  .abiq-exec-pipeline {
+    gap: 8px;
+  }
+
+  .abiq-exec-pipeline .abiq-pipe {
+    min-height: 126px;
+    padding: 16px 17px;
+  }
+
+  .abiq-exec-pipeline .abiq-pipe-num {
+    font-size: 7.4px;
+    line-height: 1.2;
+    letter-spacing: .14em;
+  }
+
+  .abiq-exec-pipeline .abiq-pipe-title {
+    margin-top: 12px;
+    font-size: 19px;
+    line-height: 1.08;
+  }
+
+  .abiq-exec-pipeline .abiq-pipe-copy {
+    margin-top: 7px;
+    font-size: 9.2px;
+    line-height: 1.45;
+  }
+}
+
+@media (max-width: 560px) {
+  .abiq-exec-copy {
+    width: 82%;
+    max-width: 82%;
+  }
+
+  .abiq-page-watermark {
+    right: -14%;
+    width: 62%;
+    opacity: .09;
+  }
+}
