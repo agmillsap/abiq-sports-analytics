@@ -7,12 +7,18 @@ ABIQ is an independently built football decision-intelligence platform that comb
 
 This repository contains the **public portfolio Showcase only**. The private production codebase, user state, credentials, provider configuration, and operator controls are intentionally excluded.
 
+## What opens first
+
+The Showcase now opens on a **static, sanitized version of the real ABIQ Dashboard experience** rather than a generic portfolio landing page. The visual hierarchy, navigation shell, weekly decision framing, recommendation panels, and ABIQ brand language mirror the private product while all displayed current-season data remain static examples.
+
+A subtle `Static Showcase` indicator and disclosure distinguish exemplary current-season data from validated historical performance.
+
 ## What this Showcase demonstrates
 
 - **NFL predictive modeling:** point-in-time historical replay with explicit leakage controls and probabilistic evaluation.
 - **Fantasy model research:** frozen baseline/challenger testing on a protected 2025 holdout before production use.
 - **Decision product design:** analytics translated into short, understandable weekly decision surfaces.
-- **Engineering:** Python, Streamlit, Plotly, automated GitHub Actions testing, and a separate public/private trust boundary.
+- **Engineering:** Python, Streamlit, custom HTML/CSS product surfaces, automated GitHub Actions testing, and a separate public/private trust boundary.
 - **Model governance:** champion/challenger controls, no silent promotion, and no post-hoc tuning on protected holdouts.
 
 ## Selected validation evidence
@@ -46,7 +52,7 @@ streamlit run app.py
 
 ## Public / private boundary
 
-The Showcase is intentionally standalone. It does **not** import or connect to the private ABIQ application, Supabase persistence, authentication, saved user picks, secrets, paid-provider adapters, or production operations.
+The Showcase is intentionally standalone. It does **not** import or connect to the private ABIQ application, production persistence, authentication, saved user picks, paid-provider adapters, or production operations.
 
 The production platform remains private while this repository provides a recruiter-safe view of the product thinking, validation discipline, and user experience.
 
