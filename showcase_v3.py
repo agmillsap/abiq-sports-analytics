@@ -64,7 +64,13 @@ def _team_logo(team: str) -> str:
     return f"https://a.espncdn.com/i/teamlogos/nfl/500/{slug}.png"
 
 
-def _game(left: str, left_probability: float, right: str, right_probability: float, time: str) -> dict[str, object]:
+def _game(
+    left: str,
+    left_probability: float,
+    right: str,
+    right_probability: float,
+    time: str,
+) -> dict[str, object]:
     return {
         "left": {
             "team": left,
@@ -81,7 +87,12 @@ def _game(left: str, left_probability: float, right: str, right_probability: flo
     }
 
 
-def _recommendation(team: str, opponent: str, probability: float, confidence: str) -> dict[str, object]:
+def _recommendation(
+    team: str,
+    opponent: str,
+    probability: float,
+    confidence: str,
+) -> dict[str, object]:
     return {
         "team": team,
         "opponent": opponent,
@@ -106,14 +117,14 @@ def _payload() -> dict[str, object]:
         "base_texture_data_uri": _asset_data_uri("assets/textures/abiq_texture_base.webp"),
         "accent_texture_data_uri": _asset_data_uri("assets/textures/abiq_texture_accent.webp"),
         "hero_description": (
-            "ABIQ turns probability, uncertainty, matchup context and future value "
-            "into a decision-ready football experience. This public opening view "
-            "uses sanitized static data while preserving the production design system."
+            "ABIQ turns probability, uncertainty, matchup context and upset risk "
+            "into a decision-ready football forecasting experience. This public "
+            "opening view uses sanitized static data while preserving the production design system."
         ),
         "kpis": [
             {"icon": "trend", "title": "TOP WIN PROBABILITY", "value": "81.1%", "subtext": "Highest current signal"},
             {"icon": "shield", "title": "CONFIDENCE LEVEL", "value": "High", "subtext": "Strongest weekly tier"},
-            {"icon": "check", "title": "WEEKLY PICKS", "value": "16", "subtext": "Across 16 games"},
+            {"icon": "check", "title": "GAMES FORECAST", "value": "16", "subtext": "Full weekly slate"},
             {"icon": "target", "title": "REPLAY ACCURACY", "value": "66.05%", "subtext": "2025 point-in-time replay"},
             {"icon": "bars", "title": "FANTASY HOLDOUT", "value": "−45.4%", "subtext": "Approx. MAE vs baseline"},
         ],
@@ -150,18 +161,22 @@ def _payload() -> dict[str, object]:
         "platform_pipeline": [
             {"verb": "OBSERVE", "title": "Data", "copy": "Open and governed football sources normalized into reproducible inputs."},
             {"verb": "TRANSFORM", "title": "Features", "copy": "Prediction-time transforms with explicit temporal cutoffs and provenance."},
-            {"verb": "ESTIMATE", "title": "Models", "copy": "Frozen champion / challenger evaluation with probabilistic metrics."},
-            {"verb": "DECIDE", "title": "Optimization", "copy": "Rankings and strategy built around the actual user decision objective."},
-            {"verb": "EXPLAIN", "title": "Product", "copy": "Fan-first interfaces with clear uncertainty and safe degraded-mode behavior."},
+            {"verb": "FORECAST", "title": "Models", "copy": "Frozen champion and challenger evaluation with probabilistic metrics."},
+            {"verb": "ASSESS", "title": "Risk", "copy": "Win probability, uncertainty and upset exposure translated into comparable signals."},
+            {"verb": "EXPLAIN", "title": "Product", "copy": "Fan-first interfaces that surface the decision and preserve analytical depth."},
         ],
     }
 
 
 SHOWCASE_COMPONENT = st.components.v2.component(
-    name="abiq_public_showcase_v3",
-    html=_read_text(FRONTEND / "showcase.html"),
-    css=_read_text(FRONTEND / "showcase.css"),
-    js=_read_text(FRONTEND / "showcase.js"),
+    name="abiq_public_showcase_v4",
+    html=_read_text(FRONTEND / "showcase_exec.html"),
+    css=(
+        _read_text(FRONTEND / "showcase.css")
+        + "\n"
+        + _read_text(FRONTEND / "showcase_exec.css")
+    ),
+    js=_read_text(FRONTEND / "showcase_exec.js"),
     isolate_styles=True,
 )
 
