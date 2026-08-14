@@ -53,6 +53,362 @@
     var(--base-texture);
 }
 
+/* Forecasts: executive visual hierarchy without changing Dashboard geometry. */
+.abiq-forecast-visual-grid {
+  display: grid;
+  grid-template-columns: minmax(0,1.12fr) minmax(360px,.88fr);
+  gap: 12px;
+  margin-top: 11px;
+}
+
+.abiq-forecast-board,
+.abiq-upset-panel {
+  min-width: 0;
+  border-radius: 11px;
+  padding: 0 18px 14px;
+}
+
+.abiq-visual-heading {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.abiq-visual-heading .abiq-eyebrow {
+  margin: 0 0 5px;
+}
+
+.abiq-visual-heading h3 {
+  margin: 0;
+  color: #ddd7cf;
+  font-family: Georgia,"Times New Roman",serif;
+  font-size: 21px;
+  line-height: 1.12;
+  font-weight: 400;
+}
+
+.abiq-visual-heading > span {
+  color: #77716a;
+  font-size: 10px;
+  letter-spacing: .12em;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.abiq-forecast-row {
+  min-height: 84px;
+  display: grid;
+  grid-template-columns: 34px minmax(150px,.9fr) minmax(145px,.95fr) 76px minmax(160px,1.1fr);
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.abiq-forecast-row:last-child {
+  border-bottom: 0;
+}
+
+.abiq-forecast-rank {
+  color: #766f68;
+  font-family: Georgia,"Times New Roman",serif;
+  font-size: 15px;
+}
+
+.abiq-forecast-matchup {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.abiq-logo-pair {
+  position: relative;
+  width: 59px;
+  height: 38px;
+  flex: 0 0 59px;
+}
+
+.abiq-logo-pair img {
+  position: absolute;
+  top: 2px;
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 5px rgba(0,0,0,.22));
+}
+
+.abiq-logo-pair img:first-child {
+  left: 0;
+  z-index: 2;
+}
+
+.abiq-logo-pair img:last-child {
+  right: 0;
+  z-index: 1;
+  opacity: .74;
+}
+
+.abiq-forecast-matchup strong,
+.abiq-forecast-matchup span {
+  display: block;
+}
+
+.abiq-forecast-matchup strong {
+  color: #ddd7cf;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.abiq-forecast-matchup span {
+  margin-top: 2px;
+  color: #8f8982;
+  font-size: 10px;
+}
+
+.abiq-forecast-signal {
+  min-width: 0;
+}
+
+.abiq-forecast-signal-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.abiq-forecast-signal-top strong {
+  color: #cf7f51;
+  font-family: Georgia,"Times New Roman",serif;
+  font-size: 17px;
+  font-weight: 400;
+}
+
+.abiq-forecast-signal-top span {
+  color: #807a73;
+  font-size: 10px;
+}
+
+.abiq-forecast-track {
+  height: 7px;
+  margin-top: 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #262828;
+}
+
+.abiq-forecast-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg,#7f472f,#dc8d5e);
+  box-shadow: 0 0 12px rgba(198,120,76,.18);
+}
+
+.abiq-forecast-confidence {
+  justify-self: start;
+  min-width: 66px;
+  padding: 7px 9px;
+  border-radius: 999px;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.abiq-forecast-confidence.high {
+  border: 1px solid rgba(198,120,76,.55);
+  background: rgba(198,120,76,.075);
+  color: #dc8d5e;
+}
+
+.abiq-forecast-confidence.medium {
+  border: 1px solid #4a4b4a;
+  background: rgba(255,255,255,.025);
+  color: #aaa49d;
+}
+
+.abiq-forecast-read {
+  color: #8c867f;
+  font-size: 10.5px;
+  line-height: 1.45;
+}
+
+.abiq-upset-matrix {
+  min-height: 324px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 8px;
+}
+
+.abiq-upset-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.abiq-upset-zone {
+  fill: rgba(198,120,76,.08);
+  stroke: rgba(198,120,76,.22);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+}
+
+.abiq-upset-zone-label {
+  fill: #a66340;
+  font-size: 10px;
+  letter-spacing: .11em;
+  font-weight: 700;
+}
+
+.abiq-chart-grid {
+  stroke: #343636;
+  stroke-width: 1;
+}
+
+.abiq-chart-tick,
+.abiq-chart-axis-label,
+.abiq-upset-label {
+  font-family: "Avenir Next",Avenir,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.abiq-chart-tick {
+  fill: #77716a;
+  font-size: 10px;
+}
+
+.abiq-chart-axis-label {
+  fill: #969089;
+  font-size: 10.5px;
+  font-weight: 550;
+}
+
+.abiq-upset-label {
+  fill: #c8c2ba;
+  font-size: 10.5px;
+  font-weight: 600;
+}
+
+.abiq-upset-dot {
+  stroke-width: 2;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.28));
+}
+
+.abiq-upset-dot.high {
+  fill: #dc8d5e;
+  stroke: #e8a27a;
+}
+
+.abiq-upset-dot.medium {
+  fill: #9f6040;
+  stroke: #bf7b54;
+}
+
+.abiq-upset-dot.low {
+  fill: #6f706e;
+  stroke: #969590;
+}
+
+.abiq-chart-note {
+  margin: -1px 2px 2px;
+  color: #77716b;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.abiq-upset-watch {
+  margin-top: 12px;
+}
+
+.abiq-upset-alert-grid {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 10px;
+}
+
+.abiq-upset-alert {
+  min-height: 174px;
+  padding: 17px;
+  border-radius: 11px;
+}
+
+.abiq-upset-alert:nth-child(even) {
+  background-color: #151717;
+  background-image: linear-gradient(145deg,rgba(4,5,5,.12),rgba(198,120,76,.02)),var(--base-texture);
+}
+
+.abiq-upset-alert-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.abiq-upset-teams {
+  display: flex;
+  align-items: center;
+}
+
+.abiq-upset-teams img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.24));
+}
+
+.abiq-upset-teams img + img {
+  margin-left: -8px;
+  opacity: .72;
+}
+
+.abiq-upset-tier {
+  padding: 6px 9px;
+  border: 1px solid rgba(198,120,76,.48);
+  border-radius: 999px;
+  color: #d68658;
+  background: rgba(198,120,76,.06);
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.abiq-upset-alert h3 {
+  margin: 14px 0 5px;
+  color: #ddd7cf;
+  font-family: Georgia,"Times New Roman",serif;
+  font-size: 20px;
+  line-height: 1.08;
+  font-weight: 400;
+}
+
+.abiq-upset-meta {
+  color: #a39d96;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.abiq-upset-alert p {
+  margin: 10px 0 0;
+  color: #817b75;
+  font-size: 10.5px;
+  line-height: 1.5;
+}
+
+@media (max-width: 1180px) and (min-width: 861px) {
+  .abiq-forecast-visual-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .abiq-forecast-row {
+    grid-template-columns: 32px minmax(145px,.85fr) minmax(145px,.9fr) 72px minmax(170px,1.2fr);
+  }
+
+  .abiq-upset-panel {
+    padding-bottom: 12px;
+  }
+}
+
 @media (max-width: 860px) {
   /* Mobile-only refinement. Dashboard desktop rules remain untouched. */
   .abiq-exec-head {
@@ -134,6 +490,88 @@
     font-size: 9.2px;
     line-height: 1.45;
   }
+
+  .abiq-forecast-visual-grid {
+    grid-template-columns: 1fr;
+    gap: 9px;
+    margin-top: 9px;
+  }
+
+  .abiq-forecast-board,
+  .abiq-upset-panel {
+    padding: 0 13px 12px;
+  }
+
+  .abiq-visual-heading {
+    min-height: 62px;
+  }
+
+  .abiq-visual-heading h3 {
+    font-size: 19px;
+  }
+
+  .abiq-forecast-row {
+    min-height: 118px;
+    grid-template-columns: 28px minmax(0,1fr) 76px;
+    grid-template-rows: auto auto auto;
+    align-items: center;
+    gap: 8px 9px;
+    padding: 12px 0;
+  }
+
+  .abiq-forecast-rank {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+    align-self: start;
+    padding-top: 7px;
+  }
+
+  .abiq-forecast-matchup {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .abiq-logo-pair {
+    width: 51px;
+    flex-basis: 51px;
+  }
+
+  .abiq-logo-pair img {
+    width: 31px;
+    height: 31px;
+  }
+
+  .abiq-forecast-confidence {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+    min-width: 66px;
+  }
+
+  .abiq-forecast-signal {
+    grid-column: 2 / 4;
+    grid-row: 2;
+  }
+
+  .abiq-forecast-read {
+    grid-column: 2 / 4;
+    grid-row: 3;
+  }
+
+  .abiq-upset-matrix {
+    min-height: 265px;
+    padding-top: 5px;
+  }
+
+  .abiq-upset-alert-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .abiq-upset-alert {
+    min-height: 0;
+    padding: 15px;
+  }
 }
 
 @media (max-width: 560px) {
@@ -146,5 +584,18 @@
     right: -14%;
     width: 62%;
     opacity: .09;
+  }
+
+  .abiq-visual-heading {
+    align-items: flex-start;
+    padding: 13px 0 10px;
+  }
+
+  .abiq-visual-heading > span {
+    padding-top: 2px;
+  }
+
+  .abiq-chart-note {
+    margin-top: 2px;
   }
 }
