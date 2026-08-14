@@ -10,6 +10,25 @@ const NAV_ITEMS = [
   ["Performance", "chart"]
 ];
 
+const TEAM_LOGO_SLUGS = {
+  ARI: "ari", CIN: "cin", CLE: "cle", DET: "det", JAX: "jax",
+  LAC: "lac", NO: "no", PHI: "phi", TB: "tb", WAS: "wsh"
+};
+
+const FORECAST_READS = {
+  LAC: "Clear top-line favorite in the static weekly view.",
+  JAX: "Strong favorite signal with less uncertainty than the middle tier.",
+  DET: "Detroit leads while a meaningful underdog path remains visible.",
+  PHI: "Tighter forecast with more upset pressure than the leading favorites.",
+  CIN: "Closest featured favorite and the slate's strongest upset-watch candidate."
+};
+
+const UPSET_READS = {
+  TB: "The narrowest featured favorite keeps Tampa live in the representative weekly slate.",
+  WAS: "A relatively tight forecast makes Washington worth monitoring behind the headline pick.",
+  NO: "Detroit remains favored, but the gap is small enough to keep New Orleans on the watch list."
+};
+
 const KPI_ICONS = {
   trend: `<svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="17"></circle><path d="M9 27l8-11 6 7 8-12"></path></svg>`,
   shield: `<svg viewBox="0 0 40 40"><path d="M20 4l14 5v9c0 9-5 14-14 18C11 32 6 27 6 18V9l14-5z"></path></svg>`,
@@ -157,21 +176,144 @@ function renderBars(container, rows) {
   }
 }
 
-function renderForecasts(parentElement, data) {
-  renderBars(parentElement.querySelector('#abiq-weekly-bars'), data.weekly_rankings?.slice(0,3));
-  const board = parentElement.querySelector('#abiq-weekly-rankings');
+function teamLogo(team) {
+  const slug = TEAM_LOGO_SLUGS[team] ?? team.toLowerCase();
+  return `https://a.espncdn.com/i/teamlogos/nfl/500/${slug}.png`;
+}
+
+function forecastFromRanking(item) {
+  const [favorite, underdog] = String(item.label ?? '').split('·').map((part) => part.trim());
+  const probability = Number(item.value ?? 0);
+  const upsetPressure = Math.max(0, Math.min(100, Math.round(200 - 2 * probability)));
+  return {
+    favorite,
+    underdog,
+    probability,
+    display: item.display ?? `${probability.toFixed(1)}%`,
+    confidence: probability >= 70 ? 'High' : 'Medium',
+    upsetPressure,
+    read: FORECAST_READS[favorite] ?? 'Representative forecast signal for the static weekly slate.'
+  };
+}
+
+function renderForecastBoard(parentElement, data) {
+  const board = parentElement.querySelector('#abiq-forecast-board');
   board.replaceChildren();
-  const head = document.createElement('div'); head.className = 'abiq-panel-heading'; head.innerHTML = '<span>WEEK 1 · RANKED FORECAST SIGNALS</span><span style="color:#756f69">STATIC EXAMPLE</span>';
-  board.appendChild(head);
   (data.weekly_rankings ?? []).forEach((item, index) => {
-    const row = document.createElement('div'); row.className = 'abiq-rank-row';
-    const rank = document.createElement('div'); rank.className = 'abiq-rank-num'; rank.textContent = String(index + 1).padStart(2,'0');
-    const matchup = document.createElement('div'); matchup.className = 'abiq-rank-match'; matchup.textContent = item.label;
-    const track = document.createElement('div'); track.className = 'abiq-bar-track';
-    const fill = document.createElement('div'); fill.className = 'abiq-bar-fill'; fill.style.width = `${item.value}%`; track.appendChild(fill);
-    const pct = document.createElement('div'); pct.className = 'abiq-rank-pct'; pct.textContent = item.display;
-    row.append(rank, matchup, track, pct); board.appendChild(row);
+    const forecast = forecastFromRanking(item);
+    const row = document.createElement('div'); row.className = 'abiq-forecast-row';
+    const rank = document.createElement('div'); rank.className = 'abiq-forecast-rank'; rank.textContent = String(index + 1).padStart(2, '0');
+
+    const matchup = document.createElement('div'); matchup.className = 'abiq-forecast-matchup';
+    const logos = document.createElement('div'); logos.className = 'abiq-logo-pair';
+    const favoriteLogo = document.createElement('img'); favoriteLogo.src = teamLogo(forecast.favorite); favoriteLogo.alt = `${forecast.favorite} logo`;
+    const underdogLogo = document.createElement('img'); underdogLogo.src = teamLogo(forecast.underdog); underdogLogo.alt = `${forecast.underdog} logo`;
+    logos.append(favoriteLogo, underdogLogo);
+    const matchupCopy = document.createElement('div');
+    const favorite = document.createElement('strong'); favorite.textContent = forecast.favorite;
+    const opponent = document.createElement('span'); opponent.textContent = `over ${forecast.underdog}`;
+    matchupCopy.append(favorite, opponent); matchup.append(logos, matchupCopy);
+
+    const signal = document.createElement('div'); signal.className = 'abiq-forecast-signal';
+    const signalTop = document.createElement('div'); signalTop.className = 'abiq-forecast-signal-top';
+    const probability = document.createElement('strong'); probability.textContent = forecast.display;
+    const probabilityLabel = document.createElement('span'); probabilityLabel.textContent = 'win forecast';
+    signalTop.append(probability, probabilityLabel);
+    const track = document.createElement('div'); track.className = 'abiq-forecast-track';
+    const fill = document.createElement('div'); fill.className = 'abiq-forecast-fill'; fill.style.width = `${forecast.probability}%`; track.appendChild(fill);
+    signal.append(signalTop, track);
+
+    const confidence = document.createElement('div');
+    confidence.className = `abiq-forecast-confidence ${forecast.confidence.toLowerCase()}`;
+    confidence.textContent = forecast.confidence;
+
+    const read = document.createElement('div'); read.className = 'abiq-forecast-read'; read.textContent = forecast.read;
+    row.append(rank, matchup, signal, confidence, read); board.appendChild(row);
   });
+}
+
+function svgElement(name, attributes = {}) {
+  const element = document.createElementNS('http://www.w3.org/2000/svg', name);
+  Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, String(value)));
+  return element;
+}
+
+function renderUpsetMatrix(parentElement, data) {
+  const container = parentElement.querySelector('#abiq-upset-matrix');
+  container.replaceChildren();
+  const forecasts = (data.weekly_rankings ?? []).map(forecastFromRanking);
+  const width = 620;
+  const height = 330;
+  const pad = {left: 58, right: 22, top: 30, bottom: 52};
+  const xMin = 60;
+  const xMax = 85;
+  const yMin = 30;
+  const yMax = 80;
+  const x = (value) => pad.left + ((value - xMin) / (xMax - xMin)) * (width - pad.left - pad.right);
+  const y = (value) => height - pad.bottom - ((value - yMin) / (yMax - yMin)) * (height - pad.top - pad.bottom);
+
+  const svg = svgElement('svg', {viewBox: `0 0 ${width} ${height}`, role: 'img', 'aria-label': 'Upset risk matrix comparing favorite win probability and relative upset pressure'});
+  svg.classList.add('abiq-upset-svg');
+
+  const zone = svgElement('rect', {x: x(60), y: y(80), width: x(68) - x(60), height: y(60) - y(80), rx: 10});
+  zone.classList.add('abiq-upset-zone'); svg.appendChild(zone);
+  const zoneLabel = svgElement('text', {x: x(60) + 12, y: y(77)}); zoneLabel.classList.add('abiq-upset-zone-label'); zoneLabel.textContent = 'UPSET ALERT ZONE'; svg.appendChild(zoneLabel);
+
+  [40, 50, 60, 70, 80].forEach((tick) => {
+    const line = svgElement('line', {x1: pad.left, x2: width - pad.right, y1: y(tick), y2: y(tick)}); line.classList.add('abiq-chart-grid'); svg.appendChild(line);
+    const label = svgElement('text', {x: pad.left - 12, y: y(tick) + 4, 'text-anchor': 'end'}); label.classList.add('abiq-chart-tick'); label.textContent = String(tick); svg.appendChild(label);
+  });
+  [60, 65, 70, 75, 80, 85].forEach((tick) => {
+    const line = svgElement('line', {x1: x(tick), x2: x(tick), y1: pad.top, y2: height - pad.bottom}); line.classList.add('abiq-chart-grid'); svg.appendChild(line);
+    const label = svgElement('text', {x: x(tick), y: height - 28, 'text-anchor': 'middle'}); label.classList.add('abiq-chart-tick'); label.textContent = `${tick}%`; svg.appendChild(label);
+  });
+
+  const xLabel = svgElement('text', {x: (pad.left + width - pad.right) / 2, y: height - 6, 'text-anchor': 'middle'}); xLabel.classList.add('abiq-chart-axis-label'); xLabel.textContent = 'Favorite win probability →'; svg.appendChild(xLabel);
+  const yLabel = svgElement('text', {x: 15, y: height / 2, transform: `rotate(-90 15 ${height / 2})`, 'text-anchor': 'middle'}); yLabel.classList.add('abiq-chart-axis-label'); yLabel.textContent = 'Upset pressure →'; svg.appendChild(yLabel);
+
+  const offsets = [
+    {dx: 10, dy: -11}, {dx: 10, dy: 18}, {dx: 10, dy: -10}, {dx: -10, dy: -12, anchor: 'end'}, {dx: -10, dy: 18, anchor: 'end'}
+  ];
+  forecasts.forEach((forecast, index) => {
+    const group = svgElement('g');
+    const tier = forecast.upsetPressure >= 72 ? 'high' : forecast.upsetPressure >= 55 ? 'medium' : 'low';
+    const circle = svgElement('circle', {cx: x(forecast.probability), cy: y(forecast.upsetPressure), r: 7}); circle.classList.add('abiq-upset-dot', tier);
+    const title = svgElement('title'); title.textContent = `${forecast.underdog} upset watch vs ${forecast.favorite}: favorite ${forecast.display}, pressure ${forecast.upsetPressure}`; circle.appendChild(title);
+    group.appendChild(circle);
+    const offset = offsets[index] ?? {dx: 9, dy: -9};
+    const label = svgElement('text', {x: x(forecast.probability) + offset.dx, y: y(forecast.upsetPressure) + offset.dy, 'text-anchor': offset.anchor ?? 'start'});
+    label.classList.add('abiq-upset-label'); label.textContent = `${forecast.favorite}–${forecast.underdog}`; group.appendChild(label);
+    svg.appendChild(group);
+  });
+  container.appendChild(svg);
+}
+
+function renderUpsetAlerts(parentElement, data) {
+  const container = parentElement.querySelector('#abiq-upset-alerts');
+  container.replaceChildren();
+  const forecasts = (data.weekly_rankings ?? []).map(forecastFromRanking).sort((a, b) => b.upsetPressure - a.upsetPressure).slice(0, 3);
+  forecasts.forEach((forecast) => {
+    const tier = forecast.upsetPressure >= 72 ? 'High watch' : forecast.upsetPressure >= 62 ? 'Elevated' : 'Monitor';
+    const card = document.createElement('article'); card.className = 'abiq-upset-alert abiq-surface';
+    const top = document.createElement('div'); top.className = 'abiq-upset-alert-top';
+    const teams = document.createElement('div'); teams.className = 'abiq-upset-teams';
+    const underdogLogo = document.createElement('img'); underdogLogo.src = teamLogo(forecast.underdog); underdogLogo.alt = `${forecast.underdog} logo`;
+    const favoriteLogo = document.createElement('img'); favoriteLogo.src = teamLogo(forecast.favorite); favoriteLogo.alt = `${forecast.favorite} logo`;
+    teams.append(underdogLogo, favoriteLogo);
+    const badge = document.createElement('span'); badge.className = 'abiq-upset-tier'; badge.textContent = tier;
+    top.append(teams, badge);
+    const title = document.createElement('h3'); title.textContent = `${forecast.underdog} over ${forecast.favorite}`;
+    const meta = document.createElement('div'); meta.className = 'abiq-upset-meta'; meta.textContent = `${forecast.favorite} favorite ${forecast.display} · Upset pressure ${forecast.upsetPressure}`;
+    const copy = document.createElement('p'); copy.textContent = UPSET_READS[forecast.underdog] ?? 'A closer forecast raises the representative underdog watch level.';
+    card.append(top, title, meta, copy); container.appendChild(card);
+  });
+}
+
+function renderForecasts(parentElement, data) {
+  renderBars(parentElement.querySelector('#abiq-weekly-bars'), data.weekly_rankings?.slice(0, 3));
+  renderForecastBoard(parentElement, data);
+  renderUpsetMatrix(parentElement, data);
+  renderUpsetAlerts(parentElement, data);
 }
 
 function renderPipeline(parentElement, data) {
