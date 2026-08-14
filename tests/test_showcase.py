@@ -37,7 +37,7 @@ def test_public_app_compiles_and_runs() -> None:
 def test_showcase_uses_branded_custom_shell() -> None:
     source = APP.read_text(encoding="utf-8")
     assert 'id="dashboard" class="page active"' in source
-    assert "Edge comes from process" in source
+    assert "Edge comes from<br>process, not predictions." in source
     assert "Model Recommendations" in source
     assert "Static portfolio example" in source
     assert "Model Performance" in source
