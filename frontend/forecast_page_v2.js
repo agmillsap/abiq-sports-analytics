@@ -146,37 +146,34 @@ function renderFullSlateBoard(parentElement, slate) {
       logos.append(favoriteLogo, underdogLogo);
 
       const matchupCopy = document.createElement('div');
-      const favorite = document.createElement('strong');
-      favorite.textContent = item.favorite;
-      const opponent = document.createElement('span');
-      opponent.textContent = `over ${item.underdog}`;
+      const matchupName = document.createElement('strong');
+      matchupName.textContent = `${item.favorite} vs ${item.underdog}`;
       const kickoff = document.createElement('small');
       kickoff.textContent = item.kickoff;
-      matchupCopy.append(favorite, opponent, kickoff);
+      matchupCopy.append(matchupName, kickoff);
       matchup.append(logos, matchupCopy);
 
-      const signal = document.createElement('div');
-      signal.className = 'abiq-full-slate-signal';
-      const signalTop = document.createElement('div');
-      signalTop.className = 'abiq-full-slate-signal-top';
-      const probability = document.createElement('strong');
-      probability.textContent = item.display;
-      const signalLabel = document.createElement('span');
-      signalLabel.textContent = 'win forecast';
-      signalTop.append(probability, signalLabel);
-      const track = document.createElement('div');
-      track.className = 'abiq-full-slate-track';
-      const fill = document.createElement('div');
-      fill.className = 'abiq-full-slate-fill';
-      fill.style.width = `${Math.max(0, Math.min(100, item.probability))}%`;
-      track.appendChild(fill);
-      signal.append(signalTop, track);
+      const pick = document.createElement('div');
+      pick.className = 'abiq-full-slate-pick';
+      const pickLabel = document.createElement('span');
+      pickLabel.textContent = 'Projected winner';
+      const pickTeam = document.createElement('strong');
+      pickTeam.textContent = item.favorite;
+      pick.append(pickLabel, pickTeam);
+
+      const probability = document.createElement('div');
+      probability.className = 'abiq-full-slate-probability';
+      const probabilityLabel = document.createElement('span');
+      probabilityLabel.textContent = 'Win %';
+      const probabilityValue = document.createElement('strong');
+      probabilityValue.textContent = item.display;
+      probability.append(probabilityLabel, probabilityValue);
 
       const badge = document.createElement('span');
       badge.className = `abiq-full-slate-tier ${tier.className}`;
       badge.textContent = tier.label;
 
-      row.append(rank, matchup, signal, badge);
+      row.append(rank, matchup, pick, probability, badge);
       column.appendChild(row);
     });
     columns.appendChild(column);
@@ -187,19 +184,81 @@ function renderFullSlateBoard(parentElement, slate) {
   host.appendChild(renderPressureMap(slate));
 }
 
+function pressureReadItems(slate) {
+  const cleanest = [...slate].sort(
+    (left, right) =>
+      (right.probability - right.closeGameProbability * 0.12) -
+      (left.probability - left.closeGameProbability * 0.12)
+  )[0];
+  const strongTension = [...slate]
+    .filter((item) => item.probability >= 70)
+    .sort((left, right) => right.closeGameProbability - left.closeGameProbability)[0];
+  const tossup = [...slate].sort((left, right) => left.probability - right.probability)[0];
+
+  return [
+    {
+      label: 'CLEANEST FAVORITE',
+      title: cleanest ? forecastV2MatchupLabel(cleanest) : '—',
+      probability: cleanest?.display ?? '—',
+      risk: cleanest?.closeGameDisplay ?? '—',
+      copy: cleanest ? `${cleanest.display} win forecast with ${cleanest.closeGameDisplay} close-game risk.` : ''
+    },
+    {
+      label: 'STRONG, BUT VOLATILE',
+      title: strongTension ? forecastV2MatchupLabel(strongTension) : '—',
+      probability: strongTension?.display ?? '—',
+      risk: strongTension?.closeGameDisplay ?? '—',
+      copy: strongTension ? `${strongTension.display} win forecast, but ${strongTension.closeGameDisplay} close-game risk.` : ''
+    },
+    {
+      label: 'TRUE TOSS-UP',
+      title: tossup ? forecastV2MatchupLabel(tossup) : '—',
+      probability: tossup?.display ?? '—',
+      risk: tossup?.closeGameDisplay ?? '—',
+      copy: tossup ? `${tossup.display} leaves almost no separation between the two sides.` : ''
+    }
+  ];
+}
+
+function renderPressureReads(readItems, className) {
+  const reads = document.createElement('div');
+  reads.className = className;
+  readItems.forEach((item) => {
+    const card = document.createElement('div');
+    card.className = 'abiq-pressure-read';
+    const label = document.createElement('span');
+    label.textContent = item.label;
+    const title = document.createElement('strong');
+    title.textContent = item.title;
+    const metrics = document.createElement('div');
+    metrics.className = 'abiq-pressure-read-metrics';
+    const win = document.createElement('span');
+    win.textContent = `${item.probability} win`;
+    const risk = document.createElement('span');
+    risk.textContent = `${item.risk} close-game risk`;
+    metrics.append(win, risk);
+    const copy = document.createElement('p');
+    copy.textContent = item.copy;
+    card.append(label, title, metrics, copy);
+    reads.appendChild(card);
+  });
+  return reads;
+}
+
 function renderPressureMap(slate) {
   const panel = document.createElement('article');
   panel.className = 'abiq-pressure-panel abiq-surface abiq-secondary-surface';
   panel.appendChild(forecastV2Heading('PRESSURE MAP', 'Where confidence and game tension collide.', 'WIN PROBABILITY × CLOSE-GAME RISK'));
 
+  const readItems = pressureReadItems(slate);
   const layout = document.createElement('div');
   layout.className = 'abiq-pressure-layout';
   const chart = document.createElement('div');
   chart.className = 'abiq-pressure-chart';
 
-  const width = 900;
+  const width = 1120;
   const height = 430;
-  const pad = {left: 72, right: 28, top: 34, bottom: 72};
+  const pad = {left: 78, right: 34, top: 34, bottom: 70};
   const xMin = 50;
   const xMax = 85;
   const yMin = 45;
@@ -238,18 +297,18 @@ function renderPressureMap(slate) {
     const grid = svgElement('line', {x1: x(tick), x2: x(tick), y1: pad.top, y2: height - pad.bottom});
     grid.classList.add('abiq-pressure-grid');
     svg.appendChild(grid);
-    const label = svgElement('text', {x: x(tick), y: height - 40, 'text-anchor': 'middle'});
+    const label = svgElement('text', {x: x(tick), y: height - 38, 'text-anchor': 'middle'});
     label.classList.add('abiq-pressure-tick');
     label.textContent = `${tick}%`;
     svg.appendChild(label);
   });
 
-  const zoneLabel = svgElement('text', {x: pad.left + 14, y: y(96)});
+  const zoneLabel = svgElement('text', {x: pad.left + 18, y: y(96)});
   zoneLabel.classList.add('abiq-pressure-zone-label');
   zoneLabel.textContent = 'HIGH-TENSION ZONE';
   svg.appendChild(zoneLabel);
 
-  const xTitle = svgElement('text', {x: (pad.left + width - pad.right) / 2, y: height - 10, 'text-anchor': 'middle'});
+  const xTitle = svgElement('text', {x: (pad.left + width - pad.right) / 2, y: height - 9, 'text-anchor': 'middle'});
   xTitle.classList.add('abiq-pressure-axis');
   xTitle.textContent = 'Favorite win probability →';
   svg.appendChild(xTitle);
@@ -260,11 +319,11 @@ function renderPressureMap(slate) {
 
   const labeledGames = new Set(['LAC–ARI', 'JAX–CLE', 'DET–NO', 'BUF–HOU', 'MIN–GB']);
   const labelOffsets = {
-    'LAC–ARI': {dx: -12, dy: -15, anchor: 'end'},
-    'JAX–CLE': {dx: 12, dy: -13, anchor: 'start'},
-    'DET–NO': {dx: 12, dy: -13, anchor: 'start'},
-    'BUF–HOU': {dx: 14, dy: -12, anchor: 'start'},
-    'MIN–GB': {dx: 14, dy: 22, anchor: 'start'}
+    'LAC–ARI': {dx: -14, dy: -16, anchor: 'end'},
+    'JAX–CLE': {dx: 13, dy: -13, anchor: 'start'},
+    'DET–NO': {dx: 14, dy: -13, anchor: 'start'},
+    'BUF–HOU': {dx: 15, dy: 22, anchor: 'start'},
+    'MIN–GB': {dx: 15, dy: 22, anchor: 'start'}
   };
 
   slate.forEach((item) => {
@@ -295,48 +354,12 @@ function renderPressureMap(slate) {
   });
 
   chart.appendChild(svg);
-
-  const reads = document.createElement('aside');
-  reads.className = 'abiq-pressure-reads';
-  const cleanest = [...slate].sort((left, right) => (right.probability - right.closeGameProbability * 0.12) - (left.probability - left.closeGameProbability * 0.12))[0];
-  const strongTension = [...slate]
-    .filter((item) => item.probability >= 70)
-    .sort((left, right) => right.closeGameProbability - left.closeGameProbability)[0];
-  const tossup = [...slate].sort((left, right) => left.probability - right.probability)[0];
-
-  const readItems = [
-    {
-      label: 'CLEANEST FAVORITE',
-      title: cleanest ? forecastV2MatchupLabel(cleanest) : '—',
-      copy: cleanest ? `${cleanest.display} win forecast with ${cleanest.closeGameDisplay} close-game risk.` : ''
-    },
-    {
-      label: 'STRONG, BUT VOLATILE',
-      title: strongTension ? forecastV2MatchupLabel(strongTension) : '—',
-      copy: strongTension ? `${strongTension.display} win forecast, but ${strongTension.closeGameDisplay} close-game risk.` : ''
-    },
-    {
-      label: 'TRUE TOSS-UP',
-      title: tossup ? forecastV2MatchupLabel(tossup) : '—',
-      copy: tossup ? `${tossup.display} leaves almost no separation between the two sides.` : ''
-    }
-  ];
-
-  readItems.forEach((item) => {
-    const card = document.createElement('div');
-    card.className = 'abiq-pressure-read';
-    const label = document.createElement('span');
-    label.textContent = item.label;
-    const title = document.createElement('strong');
-    title.textContent = item.title;
-    const copy = document.createElement('p');
-    copy.textContent = item.copy;
-    card.append(label, title, copy);
-    reads.appendChild(card);
-  });
-
-  layout.append(chart, reads);
+  layout.appendChild(chart);
+  layout.appendChild(renderPressureReads(readItems, 'abiq-pressure-reads'));
   panel.appendChild(layout);
+
+  const mobile = renderPressureReads(readItems, 'abiq-pressure-mobile-list');
+  panel.appendChild(mobile);
 
   const note = document.createElement('p');
   note.className = 'abiq-chart-note abiq-pressure-note';

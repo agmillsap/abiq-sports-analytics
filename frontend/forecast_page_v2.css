@@ -40,6 +40,8 @@
 
 #abiq-dashboard-root #page-forecasts .abiq-pre-snap-card {
   min-height: 118px;
+  display: grid;
+  grid-template-rows: auto minmax(38px, 1fr) auto;
   padding: 17px 18px;
   border: 1px solid rgba(155, 148, 139, .16);
   border-radius: 12px;
@@ -56,7 +58,8 @@
 
 #abiq-dashboard-root #page-forecasts .abiq-pre-snap-card > strong {
   display: block;
-  margin: 8px 0 5px;
+  align-self: center;
+  margin: 0;
   color: #d88350;
   font-family: Georgia, 'Times New Roman', serif;
   font-size: 31px;
@@ -123,12 +126,12 @@
 }
 
 #abiq-dashboard-root #page-forecasts .abiq-full-slate-row {
-  min-height: 86px;
+  min-height: 68px;
   display: grid;
-  grid-template-columns: 26px minmax(150px, .95fr) minmax(130px, .85fr) 64px;
+  grid-template-columns: 24px minmax(145px, 1.2fr) 78px 58px 62px;
   align-items: center;
-  gap: 10px;
-  padding: 9px 0;
+  gap: 9px;
+  padding: 7px 0;
   border-bottom: 1px solid rgba(155, 148, 139, .10);
 }
 
@@ -139,7 +142,7 @@
 #abiq-dashboard-root #page-forecasts .abiq-full-slate-rank {
   color: #847e77;
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: 13px;
+  font-size: 12.5px;
   font-variant-numeric: tabular-nums;
 }
 
@@ -147,96 +150,83 @@
   min-width: 0;
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 8px;
 }
 
 #abiq-dashboard-root #page-forecasts .abiq-full-slate-logos {
-  width: 58px;
-  flex: 0 0 58px;
+  width: 50px;
+  flex: 0 0 50px;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
 }
 
 #abiq-dashboard-root #page-forecasts .abiq-full-slate-logos img {
-  width: 27px;
-  height: 27px;
+  width: 23px;
+  height: 23px;
   object-fit: contain;
 }
 
 #abiq-dashboard-root #page-forecasts .abiq-full-slate-matchup strong,
-#abiq-dashboard-root #page-forecasts .abiq-full-slate-matchup span,
-#abiq-dashboard-root #page-forecasts .abiq-full-slate-matchup small {
+#abiq-dashboard-root #page-forecasts .abiq-full-slate-matchup small,
+#abiq-dashboard-root #page-forecasts .abiq-full-slate-pick span,
+#abiq-dashboard-root #page-forecasts .abiq-full-slate-pick strong,
+#abiq-dashboard-root #page-forecasts .abiq-full-slate-probability span,
+#abiq-dashboard-root #page-forecasts .abiq-full-slate-probability strong {
   display: block;
 }
 
 #abiq-dashboard-root #page-forecasts .abiq-full-slate-matchup strong {
   color: #ebe6df;
-  font-size: 12.5px;
+  font-size: 11.5px;
   font-weight: 700;
-}
-
-#abiq-dashboard-root #page-forecasts .abiq-full-slate-matchup span {
-  margin-top: 2px;
-  color: #8e8780;
-  font-size: 10px;
+  white-space: nowrap;
 }
 
 #abiq-dashboard-root #page-forecasts .abiq-full-slate-matchup small {
   margin-top: 3px;
   color: #6f6a65;
-  font-size: 9px;
+  font-size: 8.5px;
   line-height: 1.2;
 }
 
-#abiq-dashboard-root #page-forecasts .abiq-full-slate-signal {
-  min-width: 0;
+#abiq-dashboard-root #page-forecasts .abiq-full-slate-pick span,
+#abiq-dashboard-root #page-forecasts .abiq-full-slate-probability span {
+  margin-bottom: 3px;
+  color: #76716b;
+  font-size: 8px;
+  font-weight: 650;
+  letter-spacing: .04em;
+  text-transform: uppercase;
 }
 
-#abiq-dashboard-root #page-forecasts .abiq-full-slate-signal-top {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 8px;
+#abiq-dashboard-root #page-forecasts .abiq-full-slate-pick strong {
+  color: #ddd7d0;
+  font-size: 11px;
+  font-weight: 700;
 }
 
-#abiq-dashboard-root #page-forecasts .abiq-full-slate-signal-top strong {
+#abiq-dashboard-root #page-forecasts .abiq-full-slate-probability {
+  text-align: right;
+}
+
+#abiq-dashboard-root #page-forecasts .abiq-full-slate-probability strong {
   color: #d88350;
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 400;
   font-variant-numeric: tabular-nums;
 }
 
-#abiq-dashboard-root #page-forecasts .abiq-full-slate-signal-top span {
-  color: #79736d;
-  font-size: 9px;
-  white-space: nowrap;
-}
-
-#abiq-dashboard-root #page-forecasts .abiq-full-slate-track {
-  height: 6px;
-  margin-top: 6px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: #242626;
-}
-
-#abiq-dashboard-root #page-forecasts .abiq-full-slate-fill {
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, #9f5835 0%, #df8a54 100%);
-}
-
 #abiq-dashboard-root #page-forecasts .abiq-full-slate-tier {
-  min-width: 58px;
+  min-width: 56px;
   justify-self: end;
   padding: 6px 7px;
   border: 1px solid #4c4c4b;
   border-radius: 999px;
   color: #aaa39c;
   text-align: center;
-  font-size: 9.5px;
+  font-size: 9px;
   font-weight: 700;
 }
 
@@ -259,21 +249,21 @@
 
 #abiq-dashboard-root #page-forecasts .abiq-pressure-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.75fr) minmax(240px, .65fr);
-  gap: 22px;
-  align-items: stretch;
-  padding-top: 18px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+  padding-top: 14px;
 }
 
 #abiq-dashboard-root #page-forecasts .abiq-pressure-chart {
+  width: 100%;
   min-width: 0;
-  min-height: 350px;
   display: flex;
+  justify-content: center;
   align-items: center;
 }
 
 #abiq-dashboard-root #page-forecasts .abiq-pressure-svg {
-  width: 100%;
+  width: min(100%, 1180px);
   height: auto;
   overflow: visible;
 }
@@ -338,34 +328,51 @@
 
 #abiq-dashboard-root #page-forecasts .abiq-pressure-reads {
   display: grid;
-  grid-template-rows: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
 }
 
+#abiq-dashboard-root #page-forecasts .abiq-pressure-mobile-list {
+  display: none;
+}
+
 #abiq-dashboard-root #page-forecasts .abiq-pressure-read {
+  min-height: 112px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 104px;
   padding: 15px 16px;
   border: 1px solid rgba(155, 148, 139, .14);
   border-radius: 11px;
   background: rgba(9, 10, 10, .28);
 }
 
-#abiq-dashboard-root #page-forecasts .abiq-pressure-read span {
+#abiq-dashboard-root #page-forecasts .abiq-pressure-read > span {
   color: #8c857e;
   font-size: 9.5px;
   font-weight: 700;
   letter-spacing: .12em;
 }
 
-#abiq-dashboard-root #page-forecasts .abiq-pressure-read strong {
-  margin: 5px 0 4px;
+#abiq-dashboard-root #page-forecasts .abiq-pressure-read > strong {
+  margin: 5px 0 5px;
   color: #e4dfd8;
   font-family: Georgia, 'Times New Roman', serif;
   font-size: 19px;
   font-weight: 400;
+}
+
+#abiq-dashboard-root #page-forecasts .abiq-pressure-read-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin-bottom: 5px;
+}
+
+#abiq-dashboard-root #page-forecasts .abiq-pressure-read-metrics span {
+  color: #d88350;
+  font-size: 9.5px;
+  font-weight: 650;
 }
 
 #abiq-dashboard-root #page-forecasts .abiq-pressure-read p {
@@ -376,8 +383,8 @@
 }
 
 #abiq-dashboard-root #page-forecasts .abiq-pressure-note {
-  max-width: 980px;
-  margin: 10px 0 0;
+  max-width: 1120px;
+  margin: 12px auto 0;
 }
 
 #abiq-dashboard-root #page-forecasts .abiq-upset-watch {
@@ -401,15 +408,6 @@
   #abiq-dashboard-root #page-forecasts .abiq-full-slate-column.column-1 .abiq-full-slate-row:last-child {
     border-bottom: 1px solid rgba(155, 148, 139, .10);
   }
-
-  #abiq-dashboard-root #page-forecasts .abiq-pressure-layout {
-    grid-template-columns: 1fr;
-  }
-
-  #abiq-dashboard-root #page-forecasts .abiq-pressure-reads {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-rows: none;
-  }
 }
 
 @media (max-width: 860px) {
@@ -432,17 +430,34 @@
   }
 
   #abiq-dashboard-root #page-forecasts .abiq-pre-snap-card {
-    min-height: 0;
-    display: grid;
-    grid-template-columns: minmax(110px, .7fr) 72px minmax(0, 1.4fr);
+    min-height: 86px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "label value"
+      "detail value";
+    column-gap: 14px;
+    row-gap: 5px;
     align-items: center;
-    gap: 10px;
     padding: 13px 14px;
   }
 
+  #abiq-dashboard-root #page-forecasts .abiq-pre-snap-card > span {
+    grid-area: label;
+    align-self: end;
+  }
+
   #abiq-dashboard-root #page-forecasts .abiq-pre-snap-card > strong {
+    grid-area: value;
+    align-self: center;
+    justify-self: end;
     margin: 0;
     font-size: 25px;
+  }
+
+  #abiq-dashboard-root #page-forecasts .abiq-pre-snap-card > p {
+    grid-area: detail;
+    align-self: start;
   }
 
   #abiq-dashboard-root #page-forecasts .abiq-full-slate-board,
@@ -465,11 +480,11 @@
   }
 
   #abiq-dashboard-root #page-forecasts .abiq-full-slate-row {
-    min-height: 94px;
-    grid-template-columns: 26px minmax(0, 1fr) 62px;
+    min-height: 72px;
+    grid-template-columns: 24px minmax(0, 1fr) 60px;
     grid-template-rows: auto auto;
-    gap: 6px 9px;
-    padding: 10px 0;
+    gap: 5px 8px;
+    padding: 8px 0;
   }
 
   #abiq-dashboard-root #page-forecasts .abiq-full-slate-rank {
@@ -487,49 +502,76 @@
     grid-row: 1;
   }
 
-  #abiq-dashboard-root #page-forecasts .abiq-full-slate-signal {
-    grid-column: 2 / 4;
+  #abiq-dashboard-root #page-forecasts .abiq-full-slate-pick {
+    grid-column: 2;
     grid-row: 2;
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+
+  #abiq-dashboard-root #page-forecasts .abiq-full-slate-pick span,
+  #abiq-dashboard-root #page-forecasts .abiq-full-slate-pick strong {
+    display: inline;
+    margin: 0;
+  }
+
+  #abiq-dashboard-root #page-forecasts .abiq-full-slate-probability {
+    grid-column: 3;
+    grid-row: 2;
+    text-align: right;
+  }
+
+  #abiq-dashboard-root #page-forecasts .abiq-full-slate-probability span {
+    display: none;
+  }
+
+  #abiq-dashboard-root #page-forecasts .abiq-full-slate-probability strong {
+    font-size: 16px;
   }
 
   #abiq-dashboard-root #page-forecasts .abiq-full-slate-matchup small {
     display: none;
   }
 
-  #abiq-dashboard-root #page-forecasts .abiq-pressure-chart {
-    min-height: 270px;
+  #abiq-dashboard-root #page-forecasts .abiq-pressure-layout {
+    display: none;
   }
 
-  #abiq-dashboard-root #page-forecasts .abiq-pressure-reads {
+  #abiq-dashboard-root #page-forecasts .abiq-pressure-mobile-list {
+    display: grid;
     grid-template-columns: 1fr;
     gap: 8px;
+    padding-top: 14px;
   }
 
   #abiq-dashboard-root #page-forecasts .abiq-pressure-read {
     min-height: 0;
+    padding: 14px;
+  }
+
+  #abiq-dashboard-root #page-forecasts .abiq-pressure-note {
+    margin-top: 10px;
   }
 }
 
 @media (max-width: 520px) {
-  #abiq-dashboard-root #page-forecasts .abiq-pre-snap-card {
-    grid-template-columns: 1fr 62px;
-  }
-
-  #abiq-dashboard-root #page-forecasts .abiq-pre-snap-card > p {
-    grid-column: 1 / -1;
-  }
-
   #abiq-dashboard-root #page-forecasts .abiq-full-slate-logos {
-    width: 52px;
-    flex-basis: 52px;
+    width: 48px;
+    flex-basis: 48px;
   }
 
   #abiq-dashboard-root #page-forecasts .abiq-full-slate-logos img {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
   }
 
-  #abiq-dashboard-root #page-forecasts .abiq-pressure-label {
+  #abiq-dashboard-root #page-forecasts .abiq-full-slate-matchup strong {
     font-size: 11px;
+  }
+
+  #abiq-dashboard-root #page-forecasts .abiq-full-slate-tier {
+    min-width: 54px;
+    padding: 5px 6px;
   }
 }
