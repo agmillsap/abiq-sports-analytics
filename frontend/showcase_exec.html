@@ -1,3 +1,47 @@
+<style>
+  /* Desktop Forecasts needs to respond to the usable content width after the
+     persistent ABIQ navigation rail, not just the raw browser width. Standard
+     laptop/desktop viewports therefore stack the two analysis panels so the
+     ranked board never clips; ultra-wide layouts keep a weighted two-column view. */
+  @media (min-width: 861px) and (max-width: 1680px) {
+    #page-forecasts .abiq-forecast-visual-grid {
+      grid-template-columns: 1fr !important;
+      align-items: start !important;
+    }
+
+    #page-forecasts .abiq-forecast-board,
+    #page-forecasts .abiq-upset-panel {
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+  }
+
+  @media (min-width: 1681px) {
+    #page-forecasts .abiq-forecast-visual-grid {
+      grid-template-columns: minmax(0, 1.3fr) minmax(420px, .7fr) !important;
+      align-items: start !important;
+    }
+  }
+
+  /* The disclosure belongs visually in the center of the gap between the
+     Performance hero and metric cards. Remove the hero's default bottom margin
+     and give the disclosure equal space on both sides at every breakpoint. */
+  .abiq-page-performance > .abiq-page-head {
+    margin-bottom: 0 !important;
+  }
+
+  .abiq-performance-disclosure {
+    width: 100% !important;
+    margin: 12px auto !important;
+  }
+
+  @media (max-width: 860px) {
+    .abiq-performance-disclosure {
+      margin: 10px auto !important;
+    }
+  }
+</style>
+
 <div id="abiq-dashboard-root" class="abiq-app">
   <input id="abiq-mobile-nav-toggle" class="abiq-mobile-nav-toggle" type="checkbox" aria-hidden="true" tabindex="-1">
   <label class="abiq-mobile-menu-button" for="abiq-mobile-nav-toggle" aria-label="Open ABIQ navigation"><span></span></label>
