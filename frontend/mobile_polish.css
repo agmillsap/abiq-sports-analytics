@@ -1,10 +1,130 @@
 /* Final recruiter-facing polish from live mobile QA.
-   Keep desktop geometry unchanged; these overrides are deliberately narrow. */
+   Keep approved desktop Dashboard geometry unchanged. */
 
-/* The Fantasy holdout remains documented in repository validation evidence,
-   but it is intentionally removed from the recruiter-facing Performance UI. */
-.abiq-page-performance > .abiq-takeaway {
-  display: none !important;
+/* Performance: replace the opaque Fantasy proof point with a simple reliability graph
+   built from the validated 2025 point-in-time confidence thresholds. */
+.abiq-reliability-panel {
+  margin-top: 12px;
+  padding: 19px 22px 17px;
+  border-radius: 12px;
+}
+
+.abiq-reliability-panel .abiq-visual-heading {
+  padding-bottom: 14px;
+  border-bottom: 1px solid #2b2d2d;
+}
+
+.abiq-reliability-legend {
+  display: flex;
+  justify-content: flex-end;
+  gap: 18px;
+  margin: 12px 0 8px;
+  color: #918b84;
+  font-size: 10px;
+}
+
+.abiq-reliability-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.abiq-reliability-key i {
+  width: 18px;
+  height: 5px;
+  border-radius: 999px;
+  background: #696c6a;
+}
+
+.abiq-reliability-key.observed i {
+  background: linear-gradient(90deg,#a95d38,#df9061);
+}
+
+.abiq-reliability-chart {
+  display: grid;
+  gap: 2px;
+}
+
+.abiq-reliability-row {
+  display: grid;
+  grid-template-columns: 92px minmax(0,1fr);
+  gap: 14px;
+  align-items: center;
+  min-width: 0;
+  padding: 9px 0;
+  border-bottom: 1px solid #272929;
+}
+
+.abiq-reliability-row:last-child {
+  border-bottom: 0;
+}
+
+.abiq-reliability-label strong {
+  display: block;
+  color: #ddd7cf;
+  font-family: Georgia,"Times New Roman",serif;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.abiq-reliability-label span {
+  display: block;
+  margin-top: 3px;
+  color: #7f7a74;
+  font-size: 10px;
+}
+
+.abiq-reliability-plot {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.abiq-reliability-series {
+  display: grid;
+  grid-template-columns: 48px minmax(0,1fr) 49px;
+  gap: 8px;
+  align-items: center;
+  min-width: 0;
+}
+
+.abiq-reliability-series > span {
+  color: #77726c;
+  font-size: 10px;
+}
+
+.abiq-reliability-track {
+  height: 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #292c2c;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.32);
+}
+
+.abiq-reliability-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: #696c6a;
+}
+
+.abiq-reliability-series.observed .abiq-reliability-fill {
+  background: linear-gradient(90deg,#a95d38,#df9061);
+  box-shadow: 0 0 11px rgba(198,120,76,.14);
+}
+
+.abiq-reliability-series strong {
+  color: #aaa49d;
+  font-size: 10.5px;
+  text-align: right;
+  font-weight: 600;
+}
+
+.abiq-reliability-series.observed strong {
+  color: #d78859;
+}
+
+.abiq-reliability-panel .abiq-chart-note {
+  margin-top: 11px;
 }
 
 @media (max-width: 860px) {
@@ -77,6 +197,20 @@
   .abiq-upset-teams img + img {
     margin-left: -3px !important;
   }
+
+  .abiq-reliability-panel {
+    padding: 16px;
+  }
+
+  .abiq-reliability-row {
+    grid-template-columns: 72px minmax(0,1fr);
+    gap: 10px;
+  }
+
+  .abiq-reliability-series {
+    grid-template-columns: 42px minmax(0,1fr) 46px;
+    gap: 6px;
+  }
 }
 
 @media (max-width: 560px) {
@@ -96,5 +230,28 @@
   .abiq-logo-pair {
     width: 62px !important;
     flex-basis: 62px !important;
+  }
+
+  .abiq-reliability-legend {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 9px 14px;
+  }
+
+  .abiq-reliability-row {
+    grid-template-columns: 62px minmax(0,1fr);
+    gap: 8px;
+  }
+
+  .abiq-reliability-label strong {
+    font-size: 14px;
+  }
+
+  .abiq-reliability-series {
+    grid-template-columns: minmax(0,1fr) 44px;
+  }
+
+  .abiq-reliability-series > span {
+    display: none;
   }
 }
