@@ -191,7 +191,7 @@ def _payload() -> dict[str, object]:
 
 
 SHOWCASE_COMPONENT = st.components.v2.component(
-    name="abiq_public_showcase_v8",
+    name="abiq_public_showcase_v9",
     html=_read_text(FRONTEND / "showcase_exec.html"),
     css=(
         _read_text(FRONTEND / "showcase.css")
@@ -241,7 +241,7 @@ def run() -> None:
     SHOWCASE_COMPONENT(
         data=_payload(),
         default={},
-        key="abiq_public_showcase_v8",
+        key="abiq_public_showcase_v9",
         width="stretch",
         height="content",
     )
