@@ -25,6 +25,7 @@ renderUpsetMatrix = function(parentElement, data) {
 
   const backgroundLayer = svgElement('g');
   const markerLayer = svgElement('g');
+  const leaderLayer = svgElement('g');
   const labelLayer = svgElement('g');
 
   const zone = svgElement('rect', {
@@ -101,10 +102,16 @@ renderUpsetMatrix = function(parentElement, data) {
   zoneLabel.textContent = 'UPSET ALERT ZONE';
   labelLayer.appendChild(zoneLabel);
 
-  /* Every matchup label sits beneath its marker. The two closest points on the
-     vulnerable-favorites edge are vertically staggered so PHI–WAS and CIN–TB
-     remain unambiguous on both desktop and mobile. */
-  const labelDy = [22, 22, 22, 24, 50];
+  /* Labels remain below their markers. Short leader lines make the point-to-label
+     relationship explicit; the two closest points are pushed apart horizontally
+     and vertically so PHI–WAS and CIN–TB cannot be confused. */
+  const labelLayout = [
+    {dx: 0, dy: 25},
+    {dx: 0, dy: 25},
+    {dx: 0, dy: 25},
+    {dx: 40, dy: 31},
+    {dx: -40, dy: 57}
+  ];
 
   forecasts.forEach((forecast, index) => {
     const tier = forecast.upsetPressure >= 72 ? 'high' : forecast.upsetPressure >= 55 ? 'medium' : 'low';
@@ -121,9 +128,19 @@ renderUpsetMatrix = function(parentElement, data) {
     circle.appendChild(title);
     markerLayer.appendChild(circle);
 
+    const layout = labelLayout[index] ?? {dx: 0, dy: 25};
+    const labelX = markerX + layout.dx;
+    const labelY = markerY + layout.dy;
+    const leaderY = labelY - 13;
+    const leader = svgElement('polyline', {
+      points: `${markerX},${markerY + 8} ${markerX},${leaderY} ${labelX},${leaderY}`
+    });
+    leader.classList.add('abiq-upset-leader');
+    leaderLayer.appendChild(leader);
+
     const label = svgElement('text', {
-      x: markerX,
-      y: markerY + (labelDy[index] ?? 22),
+      x: labelX,
+      y: labelY,
       'text-anchor': 'middle'
     });
     label.classList.add('abiq-upset-label');
@@ -131,7 +148,7 @@ renderUpsetMatrix = function(parentElement, data) {
     labelLayer.appendChild(label);
   });
 
-  svg.append(backgroundLayer, markerLayer, labelLayer);
+  svg.append(backgroundLayer, markerLayer, leaderLayer, labelLayer);
   container.appendChild(svg);
 };
 
