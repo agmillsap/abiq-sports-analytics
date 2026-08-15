@@ -1,8 +1,9 @@
 /* Final recruiter-facing polish from live mobile QA.
    Keep approved desktop Dashboard geometry unchanged. */
 
-/* Performance: replace the opaque Fantasy proof point with a simple reliability graph
-   built from the validated 2025 point-in-time confidence thresholds. */
+/* Performance: recruiter-facing reliability is one observed-win-rate line chart.
+   The existing JS still populates the source container, but its rows are hidden so
+   the locked 2025 replay evidence can be presented as the simpler line visual. */
 .abiq-reliability-panel {
   margin-top: 12px;
   padding: 19px 22px 17px;
@@ -15,145 +16,71 @@
 }
 
 .abiq-reliability-legend {
-  display: flex;
-  justify-content: flex-end;
-  gap: 18px;
-  margin: 12px 0 8px;
-  color: #918b84;
-  font-size: 10px;
-}
-
-.abiq-reliability-key {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-}
-
-.abiq-reliability-key i {
-  width: 18px;
-  height: 5px;
-  border-radius: 999px;
-  background: #696c6a;
-}
-
-.abiq-reliability-key.observed i {
-  background: linear-gradient(90deg,#a95d38,#df9061);
+  display: none !important;
 }
 
 .abiq-reliability-chart {
-  display: grid;
-  gap: 2px;
+  display: block !important;
+  min-height: 320px;
+  margin-top: 10px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 viewBox%3D%220 0 620 320%22%3E%0A%3Cg fill%3D%22none%22 stroke%3D%22%232b2d2d%22 stroke-width%3D%221%22%3E%0A%3Cline x1%3D%2272%22 y1%3D%22250%22 x2%3D%22590%22 y2%3D%22250%22%2F%3E%0A%3Cline x1%3D%2272%22 y1%3D%22176.7%22 x2%3D%22590%22 y2%3D%22176.7%22%2F%3E%0A%3Cline x1%3D%2272%22 y1%3D%22103.3%22 x2%3D%22590%22 y2%3D%22103.3%22%2F%3E%0A%3Cline x1%3D%2272%22 y1%3D%2230%22 x2%3D%22590%22 y2%3D%2230%22%2F%3E%0A%3Cline x1%3D%22100%22 y1%3D%2230%22 x2%3D%22100%22 y2%3D%22250%22%2F%3E%0A%3Cline x1%3D%22260%22 y1%3D%2230%22 x2%3D%22260%22 y2%3D%22250%22%2F%3E%0A%3Cline x1%3D%22420%22 y1%3D%2230%22 x2%3D%22420%22 y2%3D%22250%22%2F%3E%0A%3Cline x1%3D%22580%22 y1%3D%2230%22 x2%3D%22580%22 y2%3D%22250%22%2F%3E%0A%3C%2Fg%3E%0A%3Cg fill%3D%22%238e8881%22 font-family%3D%22Arial,Helvetica,sans-serif%22 font-size%3D%2211%22%3E%0A%3Ctext x%3D%2262%22 y%3D%22254%22 text-anchor%3D%22end%22%3E65%25%3C%2Ftext%3E%0A%3Ctext x%3D%2262%22 y%3D%22181%22 text-anchor%3D%22end%22%3E70%25%3C%2Ftext%3E%0A%3Ctext x%3D%2262%22 y%3D%22108%22 text-anchor%3D%22end%22%3E75%25%3C%2Ftext%3E%0A%3Ctext x%3D%2262%22 y%3D%2234%22 text-anchor%3D%22end%22%3E80%25%3C%2Ftext%3E%0A%3Ctext x%3D%22100%22 y%3D%22274%22 text-anchor%3D%22middle%22%3E55%25%2B%3C%2Ftext%3E%0A%3Ctext x%3D%22260%22 y%3D%22274%22 text-anchor%3D%22middle%22%3E60%25%2B%3C%2Ftext%3E%0A%3Ctext x%3D%22420%22 y%3D%22274%22 text-anchor%3D%22middle%22%3E65%25%2B%3C%2Ftext%3E%0A%3Ctext x%3D%22580%22 y%3D%22274%22 text-anchor%3D%22middle%22%3E70%25%2B%3C%2Ftext%3E%0A%3Ctext x%3D%22331%22 y%3D%22306%22 text-anchor%3D%22middle%22%3EForecast confidence threshold %E2%86%92%3C%2Ftext%3E%0A%3Ctext x%3D%2217%22 y%3D%22140%22 text-anchor%3D%22middle%22 transform%3D%22rotate(-90 17 140)%22%3EObserved win %25 %E2%86%92%3C%2Ftext%3E%0A%3C%2Fg%3E%0A%3Cpolyline points%3D%22100,184.3 260,154.6 420,109.2 580,58.6%22 fill%3D%22none%22 stroke%3D%22%23d78859%22 stroke-width%3D%224%22 stroke-linecap%3D%22round%22 stroke-linejoin%3D%22round%22%2F%3E%0A%3Cg fill%3D%22%23d78859%22 stroke%3D%22%23171919%22 stroke-width%3D%223%22%3E%0A%3Ccircle cx%3D%22100%22 cy%3D%22184.3%22 r%3D%227%22%2F%3E%0A%3Ccircle cx%3D%22260%22 cy%3D%22154.6%22 r%3D%227%22%2F%3E%0A%3Ccircle cx%3D%22420%22 cy%3D%22109.2%22 r%3D%227%22%2F%3E%0A%3Ccircle cx%3D%22580%22 cy%3D%2258.6%22 r%3D%227%22%2F%3E%0A%3C%2Fg%3E%0A%3Cg fill%3D%22%23e1dbd3%22 stroke%3D%22%23171919%22 stroke-width%3D%224%22 paint-order%3D%22stroke%22 font-family%3D%22Arial,Helvetica,sans-serif%22 font-size%3D%2212%22 font-weight%3D%22700%22%3E%0A%3Ctext x%3D%22100%22 y%3D%22168%22 text-anchor%3D%22middle%22%3E69.5%25%3C%2Ftext%3E%0A%3Ctext x%3D%22260%22 y%3D%22138%22 text-anchor%3D%22middle%22%3E71.5%25%3C%2Ftext%3E%0A%3Ctext x%3D%22420%22 y%3D%2292%22 text-anchor%3D%22middle%22%3E74.6%25%3C%2Ftext%3E%0A%3Ctext x%3D%22580%22 y%3D%2242%22 text-anchor%3D%22middle%22%3E78.0%25%3C%2Ftext%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% auto;
 }
 
-.abiq-reliability-row {
-  display: grid;
-  grid-template-columns: 92px minmax(0,1fr);
-  gap: 14px;
-  align-items: center;
-  min-width: 0;
-  padding: 9px 0;
-  border-bottom: 1px solid #272929;
-}
-
-.abiq-reliability-row:last-child {
-  border-bottom: 0;
-}
-
-.abiq-reliability-label strong {
-  display: block;
-  color: #ddd7cf;
-  font-family: Georgia,"Times New Roman",serif;
-  font-size: 15px;
-  font-weight: 400;
-}
-
-.abiq-reliability-label span {
-  display: block;
-  margin-top: 3px;
-  color: #7f7a74;
-  font-size: 10px;
-}
-
-.abiq-reliability-plot {
-  display: grid;
-  gap: 6px;
-  min-width: 0;
-}
-
-.abiq-reliability-series {
-  display: grid;
-  grid-template-columns: 48px minmax(0,1fr) 49px;
-  gap: 8px;
-  align-items: center;
-  min-width: 0;
-}
-
-.abiq-reliability-series > span {
-  color: #77726c;
-  font-size: 10px;
-}
-
-.abiq-reliability-track {
-  height: 7px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: #292c2c;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,.32);
-}
-
-.abiq-reliability-fill {
-  height: 100%;
-  border-radius: inherit;
-  background: #696c6a;
-}
-
-.abiq-reliability-series.observed .abiq-reliability-fill {
-  background: linear-gradient(90deg,#a95d38,#df9061);
-  box-shadow: 0 0 11px rgba(198,120,76,.14);
-}
-
-.abiq-reliability-series strong {
-  color: #aaa49d;
-  font-size: 10.5px;
-  text-align: right;
-  font-weight: 600;
-}
-
-.abiq-reliability-series.observed strong {
-  color: #d78859;
+.abiq-reliability-chart > * {
+  display: none !important;
 }
 
 .abiq-reliability-panel .abiq-chart-note {
-  margin-top: 11px;
+  margin-top: 4px;
+}
+
+/* Keep matchup labels visually above dots/grid with a subtle dark halo. */
+.abiq-upset-label,
+.abiq-upset-zone-label {
+  fill: #ddd7cf !important;
+  stroke: #171919 !important;
+  stroke-width: 4px !important;
+  paint-order: stroke fill !important;
+  stroke-linejoin: round !important;
+  font-weight: 650 !important;
 }
 
 @media (max-width: 860px) {
-  /* Make the football playbook drawing materially visible behind the hero. */
+  /* Center the playbook composition behind the lower-right IQ mark. It can pass
+     behind copy, but stays faint enough to preserve headline/body readability. */
   .abiq-playbook {
-    opacity: .84 !important;
+    right: -16% !important;
+    top: 64% !important;
+    width: 84% !important;
+    height: 270px !important;
+    transform: translateY(-50%) !important;
+    opacity: .54 !important;
   }
 
   .play-line,
   .play-circle,
   .play-x path {
-    opacity: .64 !important;
+    opacity: .38 !important;
   }
 
   .play-primary {
-    opacity: .74 !important;
+    opacity: .47 !important;
   }
 
   .play-soft {
-    opacity: .43 !important;
+    opacity: .23 !important;
   }
 
   .play-copper {
-    opacity: .70 !important;
+    opacity: .43 !important;
   }
 
   marker#arrow-gray path,
   marker#arrow-copper path {
-    opacity: .74 !important;
+    opacity: .46 !important;
   }
 
   /* Pull win probability left and give Confidence enough room to read cleanly. */
@@ -175,47 +102,55 @@
     white-space: nowrap;
   }
 
-  /* Give paired team marks more breathing room on Forecasts. */
+  /* Separate paired team marks instead of allowing the base overlap treatment. */
   .abiq-logo-pair {
-    width: 64px !important;
-    flex-basis: 64px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    width: 76px !important;
+    flex: 0 0 76px !important;
   }
 
   .abiq-logo-pair img {
-    width: 34px !important;
-    height: 34px !important;
+    position: static !important;
+    width: 32px !important;
+    height: 32px !important;
+    margin: 0 !important;
+    transform: none !important;
   }
 
   .abiq-logo-pair img:last-child {
-    opacity: .82 !important;
+    opacity: .88 !important;
   }
 
   .abiq-forecast-matchup {
-    gap: 12px !important;
+    gap: 14px !important;
+  }
+
+  .abiq-upset-teams {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
   }
 
   .abiq-upset-teams img + img {
-    margin-left: -3px !important;
+    margin-left: 0 !important;
   }
 
   .abiq-reliability-panel {
     padding: 16px;
   }
 
-  .abiq-reliability-row {
-    grid-template-columns: 72px minmax(0,1fr);
-    gap: 10px;
-  }
-
-  .abiq-reliability-series {
-    grid-template-columns: 42px minmax(0,1fr) 46px;
-    gap: 6px;
+  .abiq-reliability-chart {
+    min-height: 300px;
   }
 }
 
 @media (max-width: 560px) {
   .abiq-playbook {
-    opacity: .82 !important;
+    right: -18% !important;
+    width: 88% !important;
+    opacity: .50 !important;
   }
 
   .abiq-rec-row {
@@ -228,30 +163,17 @@
   }
 
   .abiq-logo-pair {
-    width: 62px !important;
-    flex-basis: 62px !important;
+    gap: 7px !important;
+    width: 72px !important;
+    flex-basis: 72px !important;
   }
 
-  .abiq-reliability-legend {
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    gap: 9px 14px;
+  .abiq-logo-pair img {
+    width: 31px !important;
+    height: 31px !important;
   }
 
-  .abiq-reliability-row {
-    grid-template-columns: 62px minmax(0,1fr);
-    gap: 8px;
-  }
-
-  .abiq-reliability-label strong {
-    font-size: 14px;
-  }
-
-  .abiq-reliability-series {
-    grid-template-columns: minmax(0,1fr) 44px;
-  }
-
-  .abiq-reliability-series > span {
-    display: none;
+  .abiq-reliability-chart {
+    min-height: 280px;
   }
 }
