@@ -120,6 +120,25 @@ def _rank(label: str, value: float) -> dict[str, object]:
     }
 
 
+def _slate_forecast(
+    favorite: str,
+    underdog: str,
+    probability: float,
+    close_game_probability: float,
+    kickoff: str,
+) -> dict[str, object]:
+    """Return one frozen public Week 1 game-level forecast row."""
+    return {
+        "favorite": favorite,
+        "underdog": underdog,
+        "probability": probability * 100.0,
+        "display": _display_probability(probability),
+        "close_game_probability": close_game_probability * 100.0,
+        "close_game_display": _display_probability(close_game_probability),
+        "kickoff": kickoff,
+    }
+
+
 def _payload() -> dict[str, object]:
     # Public Showcase contract: football/team content is intentionally frozen.
     # Only accepted historical model-performance evidence may be refreshed over time.
@@ -162,6 +181,24 @@ def _payload() -> dict[str, object]:
             _rank("DET · NO", 0.7174),
             _rank("PHI · WAS", 0.6499),
             _rank("CIN · TB", 0.6377),
+        ],
+        "forecast_slate": [
+            _slate_forecast("LAC", "ARI", 0.8105062817258883, 0.5291666666666667, "Sep 13 · 4:25 PM"),
+            _slate_forecast("JAX", "CLE", 0.7583659013444582, 0.7044047619047620, "Sep 13 · 1:00 PM"),
+            _slate_forecast("DET", "NO", 0.7173501086956521, 0.8975000000000000, "Sep 13 · 1:00 PM"),
+            _slate_forecast("PHI", "WAS", 0.6499492481688928, 0.8829761904761906, "Sep 13 · 4:25 PM"),
+            _slate_forecast("CIN", "TB", 0.6376855125218404, 0.8250000000000000, "Sep 13 · 1:00 PM"),
+            _slate_forecast("LV", "MIA", 0.6309443508139196, 0.6508333333333334, "Sep 13 · 4:25 PM"),
+            _slate_forecast("SEA", "NE", 0.6249795348837209, 0.6608333333333334, "Sep 9 · 8:20 PM"),
+            _slate_forecast("LAR", "SF", 0.6243454398382204, 0.7725000000000000, "Sep 10 · 8:35 PM"),
+            _slate_forecast("BAL", "IND", 0.6093015410958904, 0.8975000000000000, "Sep 13 · 1:00 PM"),
+            _slate_forecast("PIT", "ATL", 0.6090102739726028, 0.9500000000000000, "Sep 13 · 1:00 PM"),
+            _slate_forecast("KC", "DEN", 0.5759675797219950, 0.9500000000000000, "Sep 14 · 8:15 PM"),
+            _slate_forecast("TEN", "NYJ", 0.5670167255659856, 0.5905952380952381, "Sep 13 · 1:00 PM"),
+            _slate_forecast("DAL", "NYG", 0.5656664605190503, 0.8528571428571428, "Sep 13 · 8:20 PM"),
+            _slate_forecast("CHI", "CAR", 0.5651663169519602, 0.9500000000000000, "Sep 13 · 1:00 PM"),
+            _slate_forecast("BUF", "HOU", 0.5154683850931677, 0.9465476190476190, "Sep 13 · 1:00 PM"),
+            _slate_forecast("MIN", "GB", 0.5117435188090689, 0.8182142857142857, "Sep 13 · 4:25 PM"),
         ],
         "performance_metrics": [
             {"label": "NFL REPLAY", "value": "272 games", "detail": "18-week expanding 2025 regular-season replay"},
@@ -207,6 +244,8 @@ SHOWCASE_COMPONENT = st.components.v2.component(
         + _read_text(FRONTEND / "desktop_forecast_balance.css")
         + "\n"
         + _read_text(FRONTEND / "slate_confidence_profile.css")
+        + "\n"
+        + _read_text(FRONTEND / "forecast_page_v2.css")
     ),
     js=(
         _read_text(FRONTEND / "showcase_exec.js")
@@ -214,6 +253,8 @@ SHOWCASE_COMPONENT = st.components.v2.component(
         + _read_text(FRONTEND / "final_visual_cleanup.js")
         + "\n"
         + _read_text(FRONTEND / "slate_confidence_profile.js")
+        + "\n"
+        + _read_text(FRONTEND / "forecast_page_v2.js")
     ),
     isolate_styles=True,
 )
