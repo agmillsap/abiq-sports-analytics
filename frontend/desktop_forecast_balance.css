@@ -1,0 +1,120 @@
+/* Desktop-only balance for the Forecasts analysis pair.
+   This stylesheet loads after final_visual_cleanup.css and intentionally uses a
+   higher-specificity root selector so it supersedes the temporary stacking rule
+   in showcase_exec.html without changing the mobile composition. */
+
+@media (min-width: 1280px) {
+  #abiq-dashboard-root #page-forecasts .abiq-forecast-visual-grid {
+    grid-template-columns: minmax(0, 2fr) minmax(390px, .8fr) !important;
+    align-items: start !important;
+    gap: 12px !important;
+  }
+
+  #abiq-dashboard-root #page-forecasts .abiq-forecast-board,
+  #abiq-dashboard-root #page-forecasts .abiq-upset-panel {
+    width: auto !important;
+    min-width: 0 !important;
+  }
+
+  /* Compact the ranked board just enough to keep every desktop element inside
+     the wider left card while preserving the same information hierarchy. */
+  #abiq-dashboard-root #page-forecasts .abiq-forecast-row {
+    grid-template-columns: 28px minmax(155px, .95fr) minmax(150px, 1.05fr) 72px !important;
+    grid-template-areas:
+      "rank matchup signal confidence"
+      "rank matchup read read" !important;
+    column-gap: 10px !important;
+    row-gap: 6px !important;
+    min-height: 106px !important;
+    padding: 11px 0 !important;
+  }
+
+  #abiq-dashboard-root #page-forecasts .abiq-logo-pair {
+    width: 68px !important;
+    flex: 0 0 68px !important;
+    gap: 6px !important;
+  }
+
+  #abiq-dashboard-root #page-forecasts .abiq-logo-pair img {
+    width: 30px !important;
+    height: 30px !important;
+  }
+
+  #abiq-dashboard-root #page-forecasts .abiq-forecast-matchup {
+    gap: 8px !important;
+  }
+
+  #abiq-dashboard-root #page-forecasts .abiq-forecast-matchup strong {
+    font-size: 12px !important;
+  }
+
+  #abiq-dashboard-root #page-forecasts .abiq-forecast-matchup span {
+    font-size: 9.5px !important;
+  }
+
+  #abiq-dashboard-root #page-forecasts .abiq-forecast-signal-top strong {
+    font-size: 16.5px !important;
+  }
+
+  #abiq-dashboard-root #page-forecasts .abiq-forecast-signal-top span {
+    font-size: 9px !important;
+  }
+
+  #abiq-dashboard-root #page-forecasts .abiq-forecast-confidence {
+    width: 68px !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    padding: 6px 4px !important;
+    font-size: 9.5px !important;
+    justify-self: center !important;
+    align-self: center !important;
+  }
+
+  #abiq-dashboard-root #page-forecasts .abiq-forecast-read {
+    font-size: 10px !important;
+    line-height: 1.4 !important;
+    padding-top: 0 !important;
+    overflow: visible !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  /* The matrix is deliberately narrower, so its typography is enlarged in SVG
+     user units and its old tall minimum is reduced to avoid a large empty card. */
+  #abiq-dashboard-root #page-forecasts .abiq-upset-panel .abiq-visual-heading {
+    gap: 8px !important;
+  }
+
+  #abiq-dashboard-root #page-forecasts .abiq-upset-panel .abiq-visual-heading h3 {
+    font-size: 18px !important;
+  }
+
+  #abiq-dashboard-root #page-forecasts .abiq-upset-panel .abiq-visual-heading > span {
+    font-size: 9px !important;
+  }
+
+  #abiq-dashboard-root #page-forecasts .abiq-upset-matrix {
+    min-height: 250px !important;
+    padding-top: 4px !important;
+  }
+
+  #abiq-dashboard-root #page-forecasts .abiq-upset-panel .abiq-chart-tick {
+    font-size: 15px !important;
+  }
+
+  #abiq-dashboard-root #page-forecasts .abiq-upset-panel .abiq-chart-axis-label {
+    font-size: 16px !important;
+  }
+
+  #abiq-dashboard-root #page-forecasts .abiq-upset-panel .abiq-upset-label {
+    font-size: 15.5px !important;
+  }
+
+  #abiq-dashboard-root #page-forecasts .abiq-upset-panel .abiq-upset-zone-label {
+    font-size: 13.5px !important;
+  }
+
+  #abiq-dashboard-root #page-forecasts .abiq-upset-panel .abiq-chart-note {
+    font-size: 9.5px !important;
+    line-height: 1.45 !important;
+  }
+}
