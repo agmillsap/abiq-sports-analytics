@@ -1,0 +1,100 @@
+/* Final recruiter-facing polish from live mobile QA.
+   Keep desktop geometry unchanged; these overrides are deliberately narrow. */
+
+/* The Fantasy holdout remains documented in repository validation evidence,
+   but it is intentionally removed from the recruiter-facing Performance UI. */
+.abiq-page-performance > .abiq-takeaway {
+  display: none !important;
+}
+
+@media (max-width: 860px) {
+  /* Make the football playbook drawing materially visible behind the hero. */
+  .abiq-playbook {
+    opacity: .84 !important;
+  }
+
+  .play-line,
+  .play-circle,
+  .play-x path {
+    opacity: .64 !important;
+  }
+
+  .play-primary {
+    opacity: .74 !important;
+  }
+
+  .play-soft {
+    opacity: .43 !important;
+  }
+
+  .play-copper {
+    opacity: .70 !important;
+  }
+
+  marker#arrow-gray path,
+  marker#arrow-copper path {
+    opacity: .74 !important;
+  }
+
+  /* Pull win probability left and give Confidence enough room to read cleanly. */
+  .abiq-rec-row {
+    grid-template-columns: 26px minmax(90px, 1fr) 72px 104px !important;
+    gap: 6px !important;
+  }
+
+  .abiq-rec-probability {
+    justify-self: start;
+  }
+
+  .abiq-confidence {
+    width: 100px !important;
+    padding: 8px 5px 7px !important;
+  }
+
+  .abiq-confidence span {
+    white-space: nowrap;
+  }
+
+  /* Give paired team marks more breathing room on Forecasts. */
+  .abiq-logo-pair {
+    width: 64px !important;
+    flex-basis: 64px !important;
+  }
+
+  .abiq-logo-pair img {
+    width: 34px !important;
+    height: 34px !important;
+  }
+
+  .abiq-logo-pair img:last-child {
+    opacity: .82 !important;
+  }
+
+  .abiq-forecast-matchup {
+    gap: 12px !important;
+  }
+
+  .abiq-upset-teams img + img {
+    margin-left: -3px !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .abiq-playbook {
+    opacity: .82 !important;
+  }
+
+  .abiq-rec-row {
+    grid-template-columns: 24px minmax(82px, 1fr) 68px 102px !important;
+    gap: 5px !important;
+  }
+
+  .abiq-confidence {
+    width: 98px !important;
+  }
+
+  .abiq-logo-pair {
+    width: 62px !important;
+    flex-basis: 62px !important;
+  }
+}
