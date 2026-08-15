@@ -179,6 +179,8 @@ SHOWCASE_COMPONENT = st.components.v2.component(
         + _read_text(FRONTEND / "showcase_exec.css")
         + "\n"
         + _read_text(FRONTEND / "typography.css")
+        + "\n"
+        + _read_text(FRONTEND / "mobile_polish.css")
     ),
     js=_read_text(FRONTEND / "showcase_exec.js"),
     isolate_styles=True,
