@@ -107,6 +107,8 @@ def _rank(label: str, value: float) -> dict[str, object]:
 
 
 def _payload() -> dict[str, object]:
+    # Public Showcase contract: football/team content is intentionally frozen.
+    # Only accepted historical model-performance evidence may be refreshed over time.
     return {
         "display_name": "Abigail Millsap",
         "initials": "AM",

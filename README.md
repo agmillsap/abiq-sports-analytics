@@ -13,6 +13,8 @@ The Showcase now opens on a **static, sanitized version of the real ABIQ Dashboa
 
 A subtle `Static Showcase` indicator and disclosure distinguish exemplary current-season data from validated historical performance.
 
+The Week 1 football example is intentionally frozen. This public Showcase is **not a weekly data feed**: team, matchup, recommendation, odds, injury, weather, and other current-season football inputs are not refreshed on a schedule. The week control remains as part of the production-style interface, but it does not trigger new weekly data. Only accepted historical model-performance evidence may be updated over time as new validation is completed.
+
 ## What this Showcase demonstrates
 
 - **NFL predictive modeling:** point-in-time historical replay with explicit leakage controls and probabilistic evaluation.
