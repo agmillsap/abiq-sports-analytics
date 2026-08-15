@@ -316,6 +316,42 @@ function renderForecasts(parentElement, data) {
   renderUpsetAlerts(parentElement, data);
 }
 
+function renderReliability(parentElement, data) {
+  const container = parentElement.querySelector('#abiq-reliability-chart');
+  container.replaceChildren();
+  for (const item of data.confidence_reliability ?? []) {
+    const row = document.createElement('div');
+    row.className = 'abiq-reliability-row';
+
+    const label = document.createElement('div');
+    label.className = 'abiq-reliability-label';
+    const threshold = document.createElement('strong'); threshold.textContent = item.threshold;
+    const games = document.createElement('span'); games.textContent = `${item.games} games`;
+    label.append(threshold, games);
+
+    const plot = document.createElement('div');
+    plot.className = 'abiq-reliability-plot';
+
+    const makeSeries = (kind, labelText, value) => {
+      const series = document.createElement('div');
+      series.className = `abiq-reliability-series ${kind}`;
+      const seriesLabel = document.createElement('span'); seriesLabel.textContent = labelText;
+      const track = document.createElement('div'); track.className = 'abiq-reliability-track';
+      const fill = document.createElement('div'); fill.className = 'abiq-reliability-fill'; fill.style.width = `${value}%`; track.appendChild(fill);
+      const display = document.createElement('strong'); display.textContent = `${value.toFixed(1)}%`;
+      series.append(seriesLabel, track, display);
+      return series;
+    };
+
+    plot.append(
+      makeSeries('predicted', 'Model', Number(item.predicted)),
+      makeSeries('observed', 'Actual', Number(item.observed))
+    );
+    row.append(label, plot);
+    container.appendChild(row);
+  }
+}
+
 function renderPipeline(parentElement, data) {
   const pipeline = parentElement.querySelector('#abiq-platform-pipeline');
   pipeline.replaceChildren();
@@ -338,7 +374,7 @@ function renderPerformance(parentElement, data) {
     const detail = document.createElement('div'); detail.className = 'abiq-metric-detail'; detail.textContent = item.detail;
     card.append(label, value, detail); grid.appendChild(card);
   }
-  renderBars(parentElement.querySelector('#abiq-fantasy-bars'), data.fantasy_holdout);
+  renderReliability(parentElement, data);
   renderPipeline(parentElement, data);
 }
 
