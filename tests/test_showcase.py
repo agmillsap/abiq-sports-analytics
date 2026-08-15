@@ -15,8 +15,10 @@ CSS = ROOT / "frontend" / "showcase_exec.css"
 TYPOGRAPHY = ROOT / "frontend" / "typography.css"
 MOBILE = ROOT / "frontend" / "mobile_polish.css"
 FINAL_CSS = ROOT / "frontend" / "final_visual_cleanup.css"
+PROFILE_CSS = ROOT / "frontend" / "slate_confidence_profile.css"
 JS = ROOT / "frontend" / "showcase_exec.js"
 FINAL_JS = ROOT / "frontend" / "final_visual_cleanup.js"
+PROFILE_JS = ROOT / "frontend" / "slate_confidence_profile.js"
 WORDMARK = ROOT / "assets" / "brand" / "abiq_wordmark.webp"
 IQ_MARK = ROOT / "assets" / "brand" / "abiq_iq_hero.webp"
 BASE_TEXTURE = ROOT / "assets" / "textures" / "abiq_texture_base.webp"
@@ -35,8 +37,10 @@ def _public_source() -> str:
             TYPOGRAPHY,
             MOBILE,
             FINAL_CSS,
+            PROFILE_CSS,
             JS,
             FINAL_JS,
+            PROFILE_JS,
         )
     )
 
@@ -68,15 +72,18 @@ def test_public_app_compiles_and_runs() -> None:
 def test_showcase_uses_streamlit_v2_component_contract() -> None:
     source = SHOWCASE.read_text(encoding="utf-8")
     assert "st.components.v2.component(" in source
-    assert 'name="abiq_public_showcase_v10"' in source
-    assert 'key="abiq_public_showcase_v10"' in source
+    assert 'name="abiq_public_showcase_v11"' in source
+    assert 'key="abiq_public_showcase_v11"' in source
     assert 'showcase_exec.html' in source
     assert 'showcase_exec.css' in source
     assert 'typography.css' in source
     assert 'mobile_polish.css' in source
     assert 'final_visual_cleanup.css' in source
+    assert 'desktop_forecast_balance.css' in source
+    assert 'slate_confidence_profile.css' in source
     assert 'showcase_exec.js' in source
     assert 'final_visual_cleanup.js' in source
+    assert 'slate_confidence_profile.js' in source
     assert "isolate_styles=True" in source
     assert 'height="content"' in source
     assert 'base_texture_data_uri' in source
