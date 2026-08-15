@@ -155,6 +155,12 @@ def _payload() -> dict[str, object]:
             {"label": "PROBABILITY QUALITY", "value": "0.2144", "detail": "Brier score measures how accurate the model's predicted probabilities are. It ranges from 0 to 1, where 0 is perfect and 1 represents maximum inaccuracy. Confidently wrong forecasts are penalized more severely than cautious misses."},
             {"label": "TEMPORAL INTEGRITY", "value": "0 violations", "detail": "37 prediction-time football features"},
         ],
+        "confidence_reliability": [
+            {"threshold": "55%+", "games": 213, "predicted": 68.16, "observed": 69.48},
+            {"threshold": "60%+", "games": 172, "predicted": 70.79, "observed": 71.51},
+            {"threshold": "65%+", "games": 130, "predicted": 73.42, "observed": 74.62},
+            {"threshold": "70%+", "games": 82, "predicted": 76.91, "observed": 78.05},
+        ],
         "fantasy_holdout": [
             {"label": "Standard", "value": FANTASY_METRICS["standard_mae_reduction"], "display": "−44.86%"},
             {"label": "Half-PPR", "value": FANTASY_METRICS["half_ppr_mae_reduction"], "display": "−45.44%"},
@@ -171,7 +177,7 @@ def _payload() -> dict[str, object]:
 
 
 SHOWCASE_COMPONENT = st.components.v2.component(
-    name="abiq_public_showcase_v5",
+    name="abiq_public_showcase_v6",
     html=_read_text(FRONTEND / "showcase_exec.html"),
     css=(
         _read_text(FRONTEND / "showcase.css")
@@ -179,6 +185,8 @@ SHOWCASE_COMPONENT = st.components.v2.component(
         + _read_text(FRONTEND / "showcase_exec.css")
         + "\n"
         + _read_text(FRONTEND / "typography.css")
+        + "\n"
+        + _read_text(FRONTEND / "mobile_polish.css")
     ),
     js=_read_text(FRONTEND / "showcase_exec.js"),
     isolate_styles=True,
@@ -208,7 +216,7 @@ def run() -> None:
     SHOWCASE_COMPONENT(
         data=_payload(),
         default={},
-        key="abiq_public_showcase_v5",
+        key="abiq_public_showcase_v6",
         width="stretch",
         height="content",
     )

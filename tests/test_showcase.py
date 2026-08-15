@@ -53,8 +53,8 @@ def test_public_app_compiles_and_runs() -> None:
 def test_showcase_uses_streamlit_v2_component_contract() -> None:
     source = SHOWCASE.read_text(encoding="utf-8")
     assert "st.components.v2.component(" in source
-    assert 'name="abiq_public_showcase_v5"' in source
-    assert 'key="abiq_public_showcase_v5"' in source
+    assert 'name="abiq_public_showcase_v6"' in source
+    assert 'key="abiq_public_showcase_v6"' in source
     assert 'showcase_exec.html' in source
     assert 'showcase_exec.css' in source
     assert 'typography.css' in source
