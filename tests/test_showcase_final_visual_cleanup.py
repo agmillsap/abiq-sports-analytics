@@ -26,18 +26,19 @@ def test_logo_pairs_are_separated_on_desktop_and_mobile() -> None:
     assert "margin-left: 0 !important" in css
 
 
-def test_upset_matrix_labels_render_below_markers_without_overlap() -> None:
+def test_upset_matrix_labels_use_leaders_and_non_overlapping_layout() -> None:
     css = FINAL_CSS.read_text(encoding="utf-8")
     js = FINAL_JS.read_text(encoding="utf-8")
+    assert ".abiq-upset-leader" in css
     assert "paint-order: stroke fill !important" in css
-    assert "font-size: 13.5px !important" in css
     assert "const markerLayer = svgElement('g')" in js
+    assert "const leaderLayer = svgElement('g')" in js
     assert "const labelLayer = svgElement('g')" in js
-    assert "svg.append(backgroundLayer, markerLayer, labelLayer)" in js
-    assert "const labelDy = [22, 22, 22, 24, 50]" in js
-    assert "x: markerX" in js
-    assert "y: markerY + (labelDy[index] ?? 22)" in js
-    assert "'text-anchor': 'middle'" in js
+    assert "const labelLayout = [" in js
+    assert "{dx: 40, dy: 31}" in js
+    assert "{dx: -40, dy: 57}" in js
+    assert "leader.classList.add('abiq-upset-leader')" in js
+    assert "svg.append(backgroundLayer, markerLayer, leaderLayer, labelLayer)" in js
     assert "PHI–WAS and CIN–TB" in js
 
 
@@ -54,10 +55,16 @@ def test_performance_uses_spacious_observed_win_rate_line_graph() -> None:
     assert "predicted" not in js
 
 
-def test_sidebar_and_temporal_metric_have_non_overlapping_overrides() -> None:
+def test_sidebar_brand_lockup_is_two_line_and_non_overlapping() -> None:
     css = FINAL_CSS.read_text(encoding="utf-8")
     assert ".abiq-brand-meaning" in css
-    assert "max-width: none !important" in css
+    assert "grid-template-columns: max-content max-content max-content !important" in css
+    assert ".abiq-brand-meaning b:nth-of-type(2) { display: none !important; }" in css
+    assert "white-space: nowrap" in css
+
+
+def test_temporal_metric_badge_does_not_overlap_copy() -> None:
+    css = FINAL_CSS.read_text(encoding="utf-8")
     assert ".abiq-metric-card:nth-child(4)::after" in css
     assert "bottom: 16px !important" in css
 
@@ -71,7 +78,7 @@ def test_lac_probability_uses_half_up_display_rounding() -> None:
 
 def test_component_identity_is_bumped_for_fresh_deploy() -> None:
     source = SHOWCASE.read_text(encoding="utf-8")
-    assert 'name="abiq_public_showcase_v8"' in source
-    assert 'key="abiq_public_showcase_v8"' in source
+    assert 'name="abiq_public_showcase_v9"' in source
+    assert 'key="abiq_public_showcase_v9"' in source
     assert 'final_visual_cleanup.css' in source
     assert 'final_visual_cleanup.js' in source
