@@ -101,19 +101,18 @@ renderUpsetMatrix = function(parentElement, data) {
   zoneLabel.textContent = 'UPSET ALERT ZONE';
   labelLayer.appendChild(zoneLabel);
 
-  const offsets = [
-    {dx: 12, dy: -12},
-    {dx: 12, dy: 20},
-    {dx: 12, dy: -12},
-    {dx: -12, dy: -14, anchor: 'end'},
-    {dx: -12, dy: 20, anchor: 'end'}
-  ];
+  /* Every matchup label sits beneath its marker. The two closest points on the
+     vulnerable-favorites edge are vertically staggered so PHI–WAS and CIN–TB
+     remain unambiguous on both desktop and mobile. */
+  const labelDy = [22, 22, 22, 24, 50];
 
   forecasts.forEach((forecast, index) => {
     const tier = forecast.upsetPressure >= 72 ? 'high' : forecast.upsetPressure >= 55 ? 'medium' : 'low';
+    const markerX = x(forecast.probability);
+    const markerY = y(forecast.upsetPressure);
     const circle = svgElement('circle', {
-      cx: x(forecast.probability),
-      cy: y(forecast.upsetPressure),
+      cx: markerX,
+      cy: markerY,
       r: 7
     });
     circle.classList.add('abiq-upset-dot', tier);
@@ -122,11 +121,10 @@ renderUpsetMatrix = function(parentElement, data) {
     circle.appendChild(title);
     markerLayer.appendChild(circle);
 
-    const offset = offsets[index] ?? {dx: 10, dy: -10};
     const label = svgElement('text', {
-      x: x(forecast.probability) + offset.dx,
-      y: y(forecast.upsetPressure) + offset.dy,
-      'text-anchor': offset.anchor ?? 'start'
+      x: markerX,
+      y: markerY + (labelDy[index] ?? 22),
+      'text-anchor': 'middle'
     });
     label.classList.add('abiq-upset-label');
     label.textContent = `${forecast.favorite}–${forecast.underdog}`;
