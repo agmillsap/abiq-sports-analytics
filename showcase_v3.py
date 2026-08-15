@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import base64
+from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
 
 import streamlit as st
@@ -64,6 +65,15 @@ def _team_logo(team: str) -> str:
     return f"https://a.espncdn.com/i/teamlogos/nfl/500/{slug}.png"
 
 
+def _display_probability(value: float) -> str:
+    """Format static Showcase probabilities with conventional half-up rounding."""
+    percentage = (Decimal(str(value)) * Decimal("100")).quantize(
+        Decimal("0.1"),
+        rounding=ROUND_HALF_UP,
+    )
+    return f"{percentage}%"
+
+
 def _game(
     left: str,
     left_probability: float,
@@ -75,12 +85,12 @@ def _game(
         "left": {
             "team": left,
             "logo": _team_logo(left),
-            "probability": f"{left_probability:.1%}",
+            "probability": _display_probability(left_probability),
         },
         "right": {
             "team": right,
             "logo": _team_logo(right),
-            "probability": f"{right_probability:.1%}",
+            "probability": _display_probability(right_probability),
         },
         "date": "SUN",
         "time": time,
@@ -97,13 +107,17 @@ def _recommendation(
         "team": team,
         "opponent": opponent,
         "logo": _team_logo(team),
-        "probability": f"{probability:.1%}",
+        "probability": _display_probability(probability),
         "confidence": confidence,
     }
 
 
 def _rank(label: str, value: float) -> dict[str, object]:
-    return {"label": label, "value": value * 100.0, "display": f"{value:.1%}"}
+    return {
+        "label": label,
+        "value": value * 100.0,
+        "display": _display_probability(value),
+    }
 
 
 def _payload() -> dict[str, object]:
@@ -177,7 +191,7 @@ def _payload() -> dict[str, object]:
 
 
 SHOWCASE_COMPONENT = st.components.v2.component(
-    name="abiq_public_showcase_v7",
+    name="abiq_public_showcase_v8",
     html=_read_text(FRONTEND / "showcase_exec.html"),
     css=(
         _read_text(FRONTEND / "showcase.css")
@@ -187,8 +201,14 @@ SHOWCASE_COMPONENT = st.components.v2.component(
         + _read_text(FRONTEND / "typography.css")
         + "\n"
         + _read_text(FRONTEND / "mobile_polish.css")
+        + "\n"
+        + _read_text(FRONTEND / "final_visual_cleanup.css")
     ),
-    js=_read_text(FRONTEND / "showcase_exec.js"),
+    js=(
+        _read_text(FRONTEND / "showcase_exec.js")
+        + "\n"
+        + _read_text(FRONTEND / "final_visual_cleanup.js")
+    ),
     isolate_styles=True,
 )
 
@@ -216,7 +236,7 @@ def run() -> None:
     SHOWCASE_COMPONENT(
         data=_payload(),
         default={},
-        key="abiq_public_showcase_v7",
+        key="abiq_public_showcase_v8",
         width="stretch",
         height="content",
     )
