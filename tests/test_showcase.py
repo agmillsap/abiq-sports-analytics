@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 APP = ROOT / "app.py"
 SHOWCASE = ROOT / "showcase_v3.py"
 README = ROOT / "README.md"
+CONFIG = ROOT / ".streamlit" / "config.toml"
 BASE_CSS = ROOT / "frontend" / "showcase.css"
 HTML = ROOT / "frontend" / "showcase_exec.html"
 CSS = ROOT / "frontend" / "showcase_exec.css"
@@ -67,8 +68,8 @@ def test_public_app_compiles_and_runs() -> None:
 def test_showcase_uses_streamlit_v2_component_contract() -> None:
     source = SHOWCASE.read_text(encoding="utf-8")
     assert "st.components.v2.component(" in source
-    assert 'name="abiq_public_showcase_v8"' in source
-    assert 'key="abiq_public_showcase_v8"' in source
+    assert 'name="abiq_public_showcase_v9"' in source
+    assert 'key="abiq_public_showcase_v9"' in source
     assert 'showcase_exec.html' in source
     assert 'showcase_exec.css' in source
     assert 'typography.css' in source
@@ -195,6 +196,12 @@ def test_public_showcase_weekly_football_data_is_frozen() -> None:
         workflow_text = workflow_file.read_text(encoding="utf-8").casefold()
         assert "schedule:" not in workflow_text
         assert "cron:" not in workflow_text
+
+
+def test_public_app_uses_supported_minimal_toolbar_mode() -> None:
+    config = CONFIG.read_text(encoding="utf-8")
+    assert '[client]' in config
+    assert 'toolbarMode = "minimal"' in config
 
 
 def test_public_app_suppresses_streamlit_viewer_chrome() -> None:
