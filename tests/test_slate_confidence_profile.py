@@ -1,10 +1,13 @@
 from __future__ import annotations
 
 import re
+import subprocess
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+BASE_JS = ROOT / "frontend" / "showcase_exec.js"
+FINAL_JS = ROOT / "frontend" / "final_visual_cleanup.js"
 PROFILE_JS = ROOT / "frontend" / "slate_confidence_profile.js"
 PROFILE_CSS = ROOT / "frontend" / "slate_confidence_profile.css"
 SHOWCASE = ROOT / "showcase_v3.py"
@@ -72,6 +75,16 @@ def test_profile_adds_no_private_runtime_or_pool_state() -> None:
     )
     for token in forbidden:
         assert token not in source
+
+
+def test_combined_showcase_javascript_parses(tmp_path: Path) -> None:
+    bundle = "\n".join(
+        path.read_text(encoding="utf-8")
+        for path in (BASE_JS, FINAL_JS, PROFILE_JS)
+    )
+    bundle_path = tmp_path / "showcase_bundle.mjs"
+    bundle_path.write_text(bundle, encoding="utf-8")
+    subprocess.run(["node", "--check", str(bundle_path)], check=True, capture_output=True, text=True)
 
 
 def test_profile_assets_are_loaded_by_fresh_component_identity() -> None:
