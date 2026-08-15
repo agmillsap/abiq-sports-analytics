@@ -184,7 +184,7 @@ def test_public_showcase_weekly_football_data_is_frozen() -> None:
     source = SHOWCASE.read_text(encoding="utf-8")
     readme = README.read_text(encoding="utf-8")
     assert '"current_week": 1' in source
-    assert '"weeks": [{"week": 1, "label": "2026 · Week 1"}]' in source
+    assert '"weeks": [{"week": 1, "label": "2026 · Week 1 · Sep 9–14"}]' in source
     assert "football/team content is intentionally frozen" in source
     assert "not a weekly data feed" in readme
     assert "Only accepted historical model-performance evidence may be updated" in readme
@@ -195,6 +195,15 @@ def test_public_showcase_weekly_football_data_is_frozen() -> None:
         workflow_text = workflow_file.read_text(encoding="utf-8").casefold()
         assert "schedule:" not in workflow_text
         assert "cron:" not in workflow_text
+
+
+def test_public_app_suppresses_streamlit_viewer_chrome() -> None:
+    source = SHOWCASE.read_text(encoding="utf-8")
+    assert '[class*="viewerBadge"]' in source
+    assert '[class*="ViewerBadge"]' in source
+    assert 'a[href*="github.com"][target="_blank"]' in source
+    assert 'a[href*="streamlit.io"][target="_blank"]' in source
+    assert '[data-testid="stToolbar"]' in source
 
 
 def test_performance_combines_validation_and_platform_story() -> None:
