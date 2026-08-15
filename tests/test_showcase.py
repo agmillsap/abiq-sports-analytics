@@ -12,7 +12,10 @@ BASE_CSS = ROOT / "frontend" / "showcase.css"
 HTML = ROOT / "frontend" / "showcase_exec.html"
 CSS = ROOT / "frontend" / "showcase_exec.css"
 TYPOGRAPHY = ROOT / "frontend" / "typography.css"
+MOBILE = ROOT / "frontend" / "mobile_polish.css"
+FINAL_CSS = ROOT / "frontend" / "final_visual_cleanup.css"
 JS = ROOT / "frontend" / "showcase_exec.js"
+FINAL_JS = ROOT / "frontend" / "final_visual_cleanup.js"
 WORDMARK = ROOT / "assets" / "brand" / "abiq_wordmark.webp"
 IQ_MARK = ROOT / "assets" / "brand" / "abiq_iq_hero.webp"
 BASE_TEXTURE = ROOT / "assets" / "textures" / "abiq_texture_base.webp"
@@ -22,7 +25,18 @@ ACCENT_TEXTURE = ROOT / "assets" / "textures" / "abiq_texture_accent.webp"
 def _public_source() -> str:
     return "\n".join(
         path.read_text(encoding="utf-8")
-        for path in (APP, SHOWCASE, HTML, BASE_CSS, CSS, TYPOGRAPHY, JS)
+        for path in (
+            APP,
+            SHOWCASE,
+            HTML,
+            BASE_CSS,
+            CSS,
+            TYPOGRAPHY,
+            MOBILE,
+            FINAL_CSS,
+            JS,
+            FINAL_JS,
+        )
     )
 
 
@@ -53,12 +67,15 @@ def test_public_app_compiles_and_runs() -> None:
 def test_showcase_uses_streamlit_v2_component_contract() -> None:
     source = SHOWCASE.read_text(encoding="utf-8")
     assert "st.components.v2.component(" in source
-    assert 'name="abiq_public_showcase_v7"' in source
-    assert 'key="abiq_public_showcase_v7"' in source
+    assert 'name="abiq_public_showcase_v8"' in source
+    assert 'key="abiq_public_showcase_v8"' in source
     assert 'showcase_exec.html' in source
     assert 'showcase_exec.css' in source
     assert 'typography.css' in source
+    assert 'mobile_polish.css' in source
+    assert 'final_visual_cleanup.css' in source
     assert 'showcase_exec.js' in source
+    assert 'final_visual_cleanup.js' in source
     assert "isolate_styles=True" in source
     assert 'height="content"' in source
     assert 'base_texture_data_uri' in source
