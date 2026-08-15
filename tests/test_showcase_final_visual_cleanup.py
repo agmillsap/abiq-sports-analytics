@@ -78,7 +78,8 @@ def test_lac_probability_uses_half_up_display_rounding() -> None:
 
 def test_component_identity_is_bumped_for_fresh_deploy() -> None:
     source = SHOWCASE.read_text(encoding="utf-8")
-    assert 'name="abiq_public_showcase_v9"' in source
-    assert 'key="abiq_public_showcase_v9"' in source
+    assert 'name="abiq_public_showcase_v10"' in source
+    assert 'key="abiq_public_showcase_v10"' in source
     assert 'final_visual_cleanup.css' in source
+    assert 'desktop_forecast_balance.css' in source
     assert 'final_visual_cleanup.js' in source
