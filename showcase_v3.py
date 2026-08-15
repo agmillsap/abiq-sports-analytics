@@ -191,7 +191,7 @@ def _payload() -> dict[str, object]:
 
 
 SHOWCASE_COMPONENT = st.components.v2.component(
-    name="abiq_public_showcase_v10",
+    name="abiq_public_showcase_v11",
     html=_read_text(FRONTEND / "showcase_exec.html"),
     css=(
         _read_text(FRONTEND / "showcase.css")
@@ -205,11 +205,15 @@ SHOWCASE_COMPONENT = st.components.v2.component(
         + _read_text(FRONTEND / "final_visual_cleanup.css")
         + "\n"
         + _read_text(FRONTEND / "desktop_forecast_balance.css")
+        + "\n"
+        + _read_text(FRONTEND / "slate_confidence_profile.css")
     ),
     js=(
         _read_text(FRONTEND / "showcase_exec.js")
         + "\n"
         + _read_text(FRONTEND / "final_visual_cleanup.js")
+        + "\n"
+        + _read_text(FRONTEND / "slate_confidence_profile.js")
     ),
     isolate_styles=True,
 )
@@ -243,7 +247,7 @@ def run() -> None:
     SHOWCASE_COMPONENT(
         data=_payload(),
         default={},
-        key="abiq_public_showcase_v10",
+        key="abiq_public_showcase_v11",
         width="stretch",
         height="content",
     )
