@@ -127,7 +127,7 @@ def _payload() -> dict[str, object]:
         "display_name": "Abigail Millsap",
         "initials": "AM",
         "current_week": 1,
-        "weeks": [{"week": 1, "label": "2026 · Week 1"}],
+        "weeks": [{"week": 1, "label": "2026 · Week 1 · Sep 9–14"}],
         "logo_data_uri": _asset_data_uri("assets/brand/abiq_wordmark.webp"),
         "iq_data_uri": _asset_data_uri("assets/brand/abiq_iq_hero.webp"),
         "base_texture_data_uri": _asset_data_uri("assets/textures/abiq_texture_base.webp"),
@@ -224,8 +224,13 @@ def run() -> None:
         """
         <style>
           [data-testid="stSidebar"], [data-testid="stHeader"], [data-testid="stToolbar"],
-          [data-testid="stStatusWidget"], [data-testid="stAppDeployButton"], #MainMenu, footer {
+          [data-testid="stStatusWidget"], [data-testid="stAppDeployButton"],
+          [data-testid="stDecoration"], [class*="viewerBadge"], [class*="ViewerBadge"],
+          #MainMenu, footer,
+          a[href*="github.com"][target="_blank"],
+          a[href*="streamlit.io"][target="_blank"] {
             display:none !important;
+            visibility:hidden !important;
           }
           .stApp { background:#111313 !important; }
           .block-container { max-width:none !important; padding:0 !important; margin:0 !important; }
