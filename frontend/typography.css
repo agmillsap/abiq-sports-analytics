@@ -61,6 +61,102 @@
   font-size: 10.5px !important;
 }
 
+/* Final Showcase polish: make the football texture legible without
+   competing with the hero copy, and show static contextual inputs. */
+.abiq-playbook {
+  opacity: .78 !important;
+}
+
+.play-line,
+.play-circle,
+.play-x path {
+  opacity: .56 !important;
+}
+
+.play-primary {
+  opacity: .64 !important;
+}
+
+.play-soft {
+  opacity: .34 !important;
+}
+
+.play-copper {
+  opacity: .60 !important;
+}
+
+.abiq-context-snapshot {
+  margin-top: 12px;
+  padding: 17px 18px 18px;
+  border-radius: 11px;
+}
+
+.abiq-context-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #2a2c2c;
+}
+
+.abiq-context-heading h3 {
+  margin: 5px 0 0;
+  color: #d9d3cb;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 19px;
+  line-height: 1.15;
+  font-weight: 400;
+}
+
+.abiq-context-heading > span {
+  color: #756f69;
+  font-size: 10px;
+  letter-spacing: .10em;
+  white-space: nowrap;
+}
+
+.abiq-context-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+  margin-top: 12px;
+}
+
+.abiq-context-card {
+  min-width: 0;
+  padding: 13px 14px;
+  border: 1px solid #303232;
+  border-radius: 8px;
+  background: rgba(11, 12, 12, .30);
+  color: #a6a099;
+  font-size: 10.5px;
+  line-height: 1.45;
+}
+
+.abiq-context-card strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #ddd7cf;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.abiq-context-card div + div {
+  margin-top: 5px;
+}
+
+.abiq-context-card span {
+  display: inline-block;
+  min-width: 68px;
+  margin-right: 7px;
+  color: #c6784c;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .08em;
+}
+
 @media (max-width: 860px) {
   /* Mobile keeps the same minimum readability standard. */
   .abiq-pipe-num {
@@ -69,5 +165,65 @@
 
   .abiq-pipe-copy {
     font-size: 10.5px !important;
+  }
+
+  .abiq-playbook {
+    opacity: .55 !important;
+  }
+
+  .play-line,
+  .play-circle,
+  .play-x path {
+    opacity: .46 !important;
+  }
+
+  .play-primary {
+    opacity: .52 !important;
+  }
+
+  .play-soft {
+    opacity: .28 !important;
+  }
+
+  .abiq-hero-iq {
+    right: 9% !important;
+    top: 60% !important;
+  }
+
+  .abiq-context-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .abiq-context-heading {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 560px) {
+  .abiq-playbook {
+    opacity: .50 !important;
+  }
+
+  .abiq-hero-iq {
+    right: 8% !important;
+    top: 66% !important;
+  }
+
+  .abiq-context-snapshot {
+    margin-top: 9px;
+    padding: 14px;
+  }
+
+  .abiq-context-heading {
+    display: block;
+  }
+
+  .abiq-context-heading > span {
+    display: block;
+    margin-top: 7px;
+  }
+
+  .abiq-context-card {
+    padding: 12px;
   }
 }
