@@ -13,13 +13,28 @@ The Showcase now opens on a **static, sanitized version of the real ABIQ Dashboa
 
 A subtle `Static Showcase` indicator and disclosure distinguish exemplary current-season data from validated historical performance.
 
-The Week 1 football example is intentionally frozen. This public Showcase is **not a weekly data feed**: team, matchup, recommendation, odds, injury, weather, and other current-season football inputs are not refreshed on a schedule. The week control remains as part of the production-style interface, but it does not trigger new weekly data. Only accepted historical model-performance evidence may be updated over time as new validation is completed.
+The NFL Week 1 forecast example is intentionally frozen. This public Showcase is **not a weekly data feed**: team, matchup, recommendation, odds, injury, weather, and other current-season football inputs are not refreshed on a schedule. The NFL header's week control does not trigger new weekly data. Only accepted historical model-performance evidence may be updated over time as new validation is completed.
+
+### CFB Survivor · Interactive Scenario Prototype
+
+The **CFB Survivor** navigation page demonstrates a working, entirely local season-planning interaction:
+
+- Switch between **SEC and Big Ten**, with separate what-if scenarios for each.
+- Browse weekly ranked alternatives and a **14-week season path**.
+- Inspect **every illustrated game and bye week** for every conference team.
+- Override a recommended pick and immediately reoptimize the remaining season; see changed future picks.
+- Enforce one selection per week and **no team reuse**; preserve earlier selections when editing later weeks.
+- Reset to the default optimal path without mutating private picks or accounts.
+
+The schedule is a **synthetic fixture** (12 illustrated games and two byes for every team), not the official NCAA 2026 schedule. Win percentages are **illustrative inputs**, not calibrated or live CFB predictions. The front-end uses a transparent, deterministic Hungarian assignment optimizer to maximize the product of example probabilities under the no-reuse rule. The display makes no claim about actual season survival, ownership projections, betting edge, or production CFB model validation.
+
+Use `node tests/cfb_survivor.test.cjs` to verify fixture symmetry, complete 14-week plans, no repeated teams, locked-week behavior, and downstream reoptimization without contacting providers.
 
 ## What this Showcase demonstrates
 
 - **NFL predictive modeling:** point-in-time historical replay with explicit leakage controls and probabilistic evaluation.
 - **Fantasy model research:** frozen baseline/challenger testing on a protected 2025 holdout before production use.
-- **Decision product design:** analytics translated into short, understandable weekly decision surfaces.
+- **Decision product design:** analytics translated into short, understandable weekly decision surfaces, including an interactive CFB Survivor what-if engine.
 - **Engineering:** Python, Streamlit, custom HTML/CSS product surfaces, automated GitHub Actions testing, and a separate public/private trust boundary.
 - **Model governance:** champion/challenger controls, no silent promotion, and no post-hoc tuning on protected holdouts.
 
