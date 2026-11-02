@@ -48,6 +48,15 @@ def _read_text(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
+def _showcase_html() -> str:
+    """Inject the public CFB prototype inside the existing Showcase page shell."""
+    source = _read_text(FRONTEND / "showcase_exec.html")
+    closing = "  </main>\n</div>"
+    if source.count(closing) != 1:
+        raise ValueError("Showcase main-page insertion point changed.")
+    return source.replace(closing, _read_text(FRONTEND / "cfb_survivor.html") + closing)
+
+
 def _asset_data_uri(relative_path: str) -> str:
     path = ROOT / relative_path
     mime_by_suffix = {
@@ -228,8 +237,8 @@ def _payload() -> dict[str, object]:
 
 
 SHOWCASE_COMPONENT = st.components.v2.component(
-    name="abiq_public_showcase_v11",
-    html=_read_text(FRONTEND / "showcase_exec.html"),
+    name="abiq_public_showcase_v12",
+    html=_showcase_html(),
     css=(
         _read_text(FRONTEND / "showcase.css")
         + "\n"
@@ -246,6 +255,8 @@ SHOWCASE_COMPONENT = st.components.v2.component(
         + _read_text(FRONTEND / "slate_confidence_profile.css")
         + "\n"
         + _read_text(FRONTEND / "forecast_page_v2.css")
+        + "\n"
+        + _read_text(FRONTEND / "cfb_survivor.css")
     ),
     js=(
         _read_text(FRONTEND / "showcase_exec.js")
@@ -255,6 +266,8 @@ SHOWCASE_COMPONENT = st.components.v2.component(
         + _read_text(FRONTEND / "slate_confidence_profile.js")
         + "\n"
         + _read_text(FRONTEND / "forecast_page_v2.js")
+        + "\n"
+        + _read_text(FRONTEND / "cfb_survivor.js")
     ),
     isolate_styles=True,
 )
@@ -288,7 +301,7 @@ def run() -> None:
     SHOWCASE_COMPONENT(
         data=_payload(),
         default={},
-        key="abiq_public_showcase_v11",
+        key="abiq_public_showcase_v12",
         width="stretch",
         height="content",
     )

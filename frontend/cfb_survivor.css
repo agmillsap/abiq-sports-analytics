@@ -1,0 +1,61 @@
+/* CFB Survivor public prototype. Scoped styles preserve the approved Dashboard and Forecasts. */
+.abiq-app.abiq-cfb-active .abiq-week-control{display:none!important}
+.abiq-cfb-page{min-width:0}
+.abiq-cfb-disclosure{margin:0 0 12px;font-size:10px;line-height:1.6}
+.abiq-cfb-toolbar{display:flex;align-items:flex-end;flex-wrap:wrap;gap:22px;padding:18px 22px;border-radius:11px}
+.abiq-cfb-field{display:flex;flex-direction:column;gap:9px;min-width:165px}
+.abiq-cfb-field label,.abiq-cfb-field-caption{font-size:10px;letter-spacing:.15em;color:#9d9690;font-weight:650}
+.abiq-cfb-field select{border:1px solid #49433c;border-radius:6px;background:#171919;color:#e5ddd3;padding:11px 32px 11px 12px;font:inherit;font-size:13px;min-height:42px}
+.abiq-cfb-switch{display:flex;gap:3px;background:#0e1010;border:1px solid #383532;padding:4px;border-radius:8px}
+.abiq-cfb-switch button{padding:9px 21px;border:0;border-radius:5px;background:transparent;color:#a39b92;font:inherit;font-size:12px;font-weight:700;letter-spacing:.06em;cursor:pointer}
+.abiq-cfb-switch button[aria-pressed="true"]{background:#975a3b;color:#fff2e8}
+.abiq-cfb-reset-field{margin-left:auto}
+.abiq-cfb-reset-field .abiq-outline-button{margin:0;min-height:43px;font-size:10px;padding:10px 15px;white-space:nowrap;cursor:pointer}
+.abiq-cfb-notice{min-height:20px;padding:6px 1px;color:#db956b;font-size:11px}
+.abiq-cfb-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:5px 0 12px}
+.abiq-cfb-metric{padding:17px 19px;border-radius:10px;min-width:0}
+.abiq-cfb-metric span{display:block;font-size:9px;letter-spacing:.14em;color:#a9a098;font-weight:700}
+.abiq-cfb-metric strong{display:block;color:#e5dcd2;font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:27px;margin:8px 0 3px}
+.abiq-cfb-metric small{display:block;font-size:10px;color:#98918b;line-height:1.5}
+.abiq-cfb-main-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:12px}
+.abiq-cfb-recommendations,.abiq-cfb-plan,.abiq-cfb-season,.abiq-cfb-schedule{min-width:0;padding:0 20px 17px;border-radius:11px}
+.abiq-cfb-intro{margin:11px 0;color:#a89f96;font-size:11px;line-height:1.55}
+.abiq-cfb-pick{width:100%;display:grid;grid-template-columns:26px minmax(0,1fr) 72px 85px;align-items:center;gap:12px;text-align:left;padding:12px 8px;border:0;border-bottom:1px solid #2c2c2c;background:transparent;color:#eee5dc;cursor:pointer;font:inherit}
+.abiq-cfb-pick:hover,.abiq-cfb-pick:focus-visible{background:rgba(184,111,69,.1);outline:1px solid #865338}
+.abiq-cfb-pick.selected{background:rgba(184,111,69,.12)}
+.abiq-cfb-pick-rank{color:#94867b;font-size:13px}
+.abiq-cfb-pick-team strong{display:block;font-weight:700;font-size:13px}
+.abiq-cfb-pick-team small{display:block;margin-top:4px;color:#9d978f;font-size:10px}
+.abiq-cfb-pick-prob{font-size:15px;font-weight:700;color:#e2a17c;text-align:right;white-space:nowrap}
+.abiq-cfb-pick-action{font-size:10px;color:#c48460;text-align:right}
+.abiq-cfb-pick-note{font-size:10px;color:#a59c92;padding:7px 8px 9px 46px;line-height:1.5;border-bottom:1px solid #242626}
+.abiq-cfb-impact-head{font-family:Georgia,"Times New Roman",serif;color:#e5dcd2;font-size:22px;line-height:1.2;margin:18px 0 8px}
+.abiq-cfb-impact-sub{font-size:11px;line-height:1.6;color:#a9a098}
+.abiq-cfb-impact-list{margin-top:14px;display:grid;gap:8px}
+.abiq-cfb-change{display:grid;grid-template-columns:53px minmax(0,1fr);gap:8px;align-items:center;padding:9px;background:#1b1e1d;border:1px solid #39332f;border-radius:6px;font-size:11px;color:#d7cfc6}
+.abiq-cfb-change span{color:#e09e78;font-weight:700;white-space:nowrap}
+.abiq-cfb-change strong{font-weight:500}
+.abiq-cfb-help{margin:16px 0 2px;padding-top:13px;border-top:1px solid #33302e;font-size:10px;line-height:1.65;color:#988f86}
+.abiq-cfb-season,.abiq-cfb-schedule{margin-top:12px}
+.abiq-cfb-season-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+.abiq-cfb-week-card{min-width:0;min-height:113px;border:1px solid #37332f;border-radius:7px;background:#1a1c1b;padding:11px 9px;text-align:left;color:#ded6ce;cursor:pointer;font:inherit}
+.abiq-cfb-week-card.active,.abiq-cfb-week-card:hover{border-color:#b86f45;background:#2a211d}
+.abiq-cfb-week-card.changed{border-color:#b86f45}
+.abiq-cfb-week-card span{display:block;color:#a9a097;font-size:10px}
+.abiq-cfb-week-card strong{display:block;margin:9px 0 4px;font-size:13px;overflow-wrap:anywhere}
+.abiq-cfb-week-card small{color:#c58a67;font-size:10px}
+.abiq-cfb-week-card em{display:block;font-size:9px;font-style:normal;color:#bb8d70;margin-top:5px}
+.abiq-cfb-schedule-top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 0 12px}
+.abiq-cfb-schedule-top h3{font-family:Georgia,"Times New Roman",serif;font-size:22px;color:#e1d8cd;margin:6px 0;font-weight:400}
+.abiq-cfb-schedule-top p{color:#a29a92;font-size:11px;line-height:1.5;margin:0}
+.abiq-cfb-team-summary{margin:5px 0 13px;color:#b6ada4;font-size:11px}
+.abiq-cfb-table-scroll{overflow-x:auto}
+.abiq-cfb-table{width:100%;border-collapse:collapse;color:#d9d1c7;font-size:11px}
+.abiq-cfb-table th{text-align:left;padding:12px 10px;color:#a89e95;font-size:9px;letter-spacing:.1em;border-bottom:1px solid #51443b;white-space:nowrap}
+.abiq-cfb-table td{padding:12px 10px;border-bottom:1px solid #2f302e}
+.abiq-cfb-table tr.in-plan{background:rgba(184,111,69,.09)}
+.abiq-cfb-table td:last-child{color:#d79870}
+.abiq-cfb-table .abiq-cfb-table-pick{border:1px solid #7a4d35;background:transparent;color:#d99876;border-radius:5px;padding:5px 8px;font:inherit;font-size:10px;cursor:pointer}
+@media(max-width:1200px){.abiq-cfb-season-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:860px){.abiq-cfb-main-grid{grid-template-columns:1fr}.abiq-cfb-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}.abiq-cfb-season-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.abiq-cfb-reset-field{margin-left:0}.abiq-cfb-page .abiq-exec-copy{width:100%}}
+@media(max-width:560px){.abiq-cfb-toolbar{gap:15px;padding:14px}.abiq-cfb-field{min-width:0;flex:1 1 140px}.abiq-cfb-reset-field{flex:1 1 100%}.abiq-cfb-metrics{grid-template-columns:1fr 1fr}.abiq-cfb-metric:last-child{grid-column:1/-1}.abiq-cfb-season-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.abiq-cfb-pick{grid-template-columns:19px minmax(0,1fr) 63px;gap:6px}.abiq-cfb-pick-action{grid-column:2/-1;text-align:left}.abiq-cfb-pick-note{padding-left:29px}.abiq-cfb-schedule-top{align-items:stretch;flex-direction:column}.abiq-cfb-metric strong{font-size:24px}}

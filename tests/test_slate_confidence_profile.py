@@ -89,7 +89,7 @@ def test_combined_showcase_javascript_parses(tmp_path: Path) -> None:
 
 def test_profile_assets_are_loaded_by_fresh_component_identity() -> None:
     source = SHOWCASE.read_text(encoding="utf-8")
-    assert 'name="abiq_public_showcase_v11"' in source
-    assert 'key="abiq_public_showcase_v11"' in source
+    assert 'name="abiq_public_showcase_v12"' in source
+    assert 'key="abiq_public_showcase_v12"' in source
     assert 'slate_confidence_profile.css' in source
     assert 'slate_confidence_profile.js' in source

@@ -1,0 +1,58 @@
+    <section id="page-cfb-survivor" class="abiq-page abiq-cfb-page" data-page="CFB Survivor">
+      <section class="abiq-page-head abiq-exec-head abiq-surface abiq-accent-surface">
+        <div class="abiq-exec-copy">
+          <div class="abiq-eyebrow">COLLEGE FOOTBALL · SEASON STRATEGY</div>
+          <h2>CFB Survivor</h2>
+          <p>One pick changes the whole board. Explore conference-specific survivor paths, preserve valuable teams, and test what happens when you take a different route.</p>
+        </div>
+        <img class="abiq-page-watermark" data-iq alt="" aria-hidden="true">
+      </section>
+      <div class="abiq-disclosure abiq-cfb-disclosure">
+        <strong>Interactive portfolio prototype.</strong> All conference schedules, matchups, and probabilities in this module are constructed illustrations, not the official 2026 schedule, live ABIQ forecasts, or validated CFB outcomes. Reoptimization is functional; its probability inputs are examples.
+      </div>
+      <section class="abiq-cfb-toolbar abiq-surface" aria-label="Survivor scenario controls">
+        <div class="abiq-cfb-field">
+          <label for="abiq-cfb-conference">CONFERENCE</label>
+          <div class="abiq-cfb-switch" id="abiq-cfb-conference" role="group" aria-label="Conference">
+            <button type="button" data-conference="SEC" aria-pressed="true">SEC</button>
+            <button type="button" data-conference="BIG TEN" aria-pressed="false">BIG TEN</button>
+          </div>
+        </div>
+        <div class="abiq-cfb-field">
+          <label for="abiq-cfb-week">PLANNING WEEK</label>
+          <select id="abiq-cfb-week" aria-label="Planning week"></select>
+        </div>
+        <div class="abiq-cfb-field abiq-cfb-reset-field">
+          <span class="abiq-cfb-field-caption">SCENARIO</span>
+          <button type="button" id="abiq-cfb-reset" class="abiq-outline-button">RESET TO OPTIMAL PATH ↺</button>
+        </div>
+      </section>
+      <div id="abiq-cfb-notice" class="abiq-cfb-notice" role="status" aria-live="polite"></div>
+      <section id="abiq-cfb-metrics" class="abiq-cfb-metrics" aria-label="Season plan metrics"></section>
+      <section class="abiq-cfb-main-grid">
+        <article class="abiq-cfb-recommendations abiq-surface">
+          <div class="abiq-visual-heading"><div><div class="abiq-eyebrow">WEEKLY SHORTLIST</div><h3>Top suggested picks</h3></div><span id="abiq-cfb-week-heading">WEEK 1</span></div>
+          <p class="abiq-cfb-intro">Select a team to commit it to the scenario. Future weeks are recalculated around that decision.</p>
+          <div id="abiq-cfb-picks"></div>
+        </article>
+        <article class="abiq-cfb-plan abiq-surface abiq-secondary-surface">
+          <div class="abiq-visual-heading"><div><div class="abiq-eyebrow">WHAT-IF ENGINE</div><h3>How the decision changes the path</h3></div><span>REOPTIMIZED</span></div>
+          <div id="abiq-cfb-impact"></div>
+          <div class="abiq-cfb-help">Past weeks remain fixed when you change a later week. Teams cannot be selected twice in the same conference plan. Each conference has its own scenario.</div>
+        </article>
+      </section>
+      <section class="abiq-cfb-season abiq-surface">
+        <div class="abiq-visual-heading"><div><div class="abiq-eyebrow">FULL-SEASON OUTLOOK</div><h3>Every week. One strategic path.</h3></div><span>WEEKS 1–14</span></div>
+        <p class="abiq-cfb-intro">A 14-week planning illustration. Choose any week to compare alternatives; copper-marked selections are manual overrides.</p>
+        <div id="abiq-cfb-season-grid" class="abiq-cfb-season-grid"></div>
+      </section>
+      <section class="abiq-cfb-schedule abiq-surface abiq-secondary-surface">
+        <div class="abiq-cfb-schedule-top">
+          <div><div class="abiq-eyebrow">TEAM INTELLIGENCE</div><h3>Full team schedule explorer</h3><p>See every illustrative matchup, bye week, and whether that team is being saved for a better survivor spot.</p></div>
+          <div class="abiq-cfb-field"><label for="abiq-cfb-team">EXPLORE TEAM</label><select id="abiq-cfb-team" aria-label="Team schedule"></select></div>
+        </div>
+        <div id="abiq-cfb-team-summary"></div>
+        <div id="abiq-cfb-schedule-table" class="abiq-cfb-table-scroll"></div>
+      </section>
+      <div class="abiq-disclosure"><strong>Model boundary.</strong> The public optimizer maximizes the product of illustrative per-week win inputs subject to one unique team per week, with user selections fixed. It is a transparent scenario-planning demo, not a claim of calibrated CFB win probabilities, true season-survival likelihood, or official schedules.</div>
+    </section>
