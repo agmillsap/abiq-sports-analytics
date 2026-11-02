@@ -29,8 +29,16 @@ h1{font-size:24px;margin-bottom:10px}p{color:#62738a;line-height:1.5}.loading{fo
   document.getElementById('status').textContent='Opening product dashboard…';
   const html=await new Blob(chunks,{type:'text/html;charset=utf-8'}).text();
   if(!html.toLowerCase().startsWith('<!doctype html>'))throw new Error('Portfolio content is incomplete.');
+  // Preserve the user's original portfolio and demos; replace the external ABIQ app
+  // with an always-available static local showcase in a portfolio-native overlay.
+  const integrated=html
+    .replaceAll('https://abiq-sports.streamlit.app','./abiq/')
+    .replace('>Open ABIQ</a>','>Open interactive demo</a>')
+    .replace(/<\/head>/i,'<link rel="stylesheet" href="./abiq-embed.css"></head>')
+    .replace(/<\/body>/i,'<scr'+'ipt src="./abiq-embed.js"></scr'+'ipt></body>');
+  if(!integrated.includes('href="./abiq/"'))throw new Error('ABIQ showcase integration could not be confirmed.');
   document.open();
-  document.write(html);
+  document.write(integrated);
   document.close();
  }catch(error){
   const status=document.getElementById('status');
