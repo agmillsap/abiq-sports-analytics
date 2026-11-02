@@ -161,9 +161,9 @@ def _payload() -> dict[str, object]:
         "base_texture_data_uri": _asset_data_uri("assets/textures/abiq_texture_base.webp"),
         "accent_texture_data_uri": _asset_data_uri("assets/textures/abiq_texture_accent.webp"),
         "hero_description": (
-            "ABIQ turns probability, uncertainty, matchup context and upset risk "
-            "into a decision-ready football forecasting experience. This public "
-            "opening view uses sanitized static data while preserving the production design system."
+            "Explore NFL forecast examples and interactive college-football survivor "
+            "scenarios in one weekly decision view. NFL Week 1 inputs are frozen, "
+            "while all CFB matchups and probabilities are illustrative rather than live."
         ),
         "kpis": [
             {"icon": "trend", "title": "TOP WIN PROBABILITY", "value": "81.1%", "subtext": "Highest current signal"},
@@ -237,7 +237,7 @@ def _payload() -> dict[str, object]:
 
 
 SHOWCASE_COMPONENT = st.components.v2.component(
-    name="abiq_public_showcase_v12",
+    name="abiq_public_showcase_v13",
     html=_showcase_html(),
     css=(
         _read_text(FRONTEND / "showcase.css")
@@ -257,6 +257,8 @@ SHOWCASE_COMPONENT = st.components.v2.component(
         + _read_text(FRONTEND / "forecast_page_v2.css")
         + "\n"
         + _read_text(FRONTEND / "cfb_survivor.css")
+        + "\n"
+        + _read_text(FRONTEND / "weekly_showcase.css")
     ),
     js=(
         _read_text(FRONTEND / "showcase_exec.js")
@@ -268,6 +270,8 @@ SHOWCASE_COMPONENT = st.components.v2.component(
         + _read_text(FRONTEND / "forecast_page_v2.js")
         + "\n"
         + _read_text(FRONTEND / "cfb_survivor.js")
+        + "\n"
+        + _read_text(FRONTEND / "weekly_showcase.js")
     ),
     isolate_styles=True,
 )
@@ -301,7 +305,7 @@ def run() -> None:
     SHOWCASE_COMPONENT(
         data=_payload(),
         default={},
-        key="abiq_public_showcase_v12",
+        key="abiq_public_showcase_v13",
         width="stretch",
         height="content",
     )

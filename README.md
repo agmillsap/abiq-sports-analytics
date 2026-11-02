@@ -13,7 +13,13 @@ The Showcase now opens on a **static, sanitized version of the real ABIQ Dashboa
 
 A subtle `Static Showcase` indicator and disclosure distinguish exemplary current-season data from validated historical performance.
 
-The NFL Week 1 forecast example is intentionally frozen. This public Showcase is **not a weekly data feed**: team, matchup, recommendation, odds, injury, weather, and other current-season football inputs are not refreshed on a schedule. The NFL header's week control does not trigger new weekly data. Only accepted historical model-performance evidence may be updated over time as new validation is completed.
+The NFL Week 1 forecast example is intentionally frozen. This public Showcase is **not a weekly data feed**: team, matchup, recommendation, odds, injury, weather, and other current-season football inputs are not refreshed on a schedule. The Dashboard's week selector changes the *local CFB scenario planning week* (Weeks 1–14); it never loads new NFL forecasts. NFL selections appear only for the frozen Week 1 public snapshot, while Weeks 2–14 explicitly show that no later NFL forecast is supplied. Only accepted historical model-performance evidence may be updated over time as new validation is completed.
+
+### Combined weekly Dashboard and NFL Forecasts
+
+The Dashboard now presents a **weekly NFL + CFB pick board** aligned with the ABIQ dark/copper design and team logos. At Week 1 it includes three frozen representative NFL forecasts alongside the current SEC and Big Ten illustrative Survivor path picks. Selecting Weeks 2–14 shows the two CFB picks with an explicit NFL unavailable state, **never invented later-week NFL projections**. Changes to the CFB scenario are reflected when returning to the Dashboard. The previous Forecasts destination is now visibly named **NFL Forecasts**, and the validated Performance page is unchanged.
+
+CFB team marks are loaded as public CDN images from ESPN, with readable monogram fallback if the third-party asset is unavailable. These logos are presentation assets, not data collection or odds API calls. The combined board does not rank NFL forecasts against synthetic college probabilities, and the displayed planning week numbers do not imply NFL/CFB calendar alignment.
 
 ### CFB Survivor · Interactive Scenario Prototype
 

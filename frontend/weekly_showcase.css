@@ -1,0 +1,33 @@
+/* Dashboard weekly decision surface: echo ABIQ's dark copper cards and team branding. */
+.abiq-app:not(.abiq-dashboard-active) .abiq-week-control{display:none!important}
+#page-dashboard #abiq-kpis,#page-dashboard .abiq-lower-grid,#page-dashboard .abiq-context-snapshot{display:none!important}
+.abiq-weekly-command{margin-top:14px;padding:18px 20px 20px;border-radius:12px;min-width:0}
+.abiq-weekly-head{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:10px}
+.abiq-weekly-head h2{font-family:Georgia,"Times New Roman",serif;color:#eaded2;font-size:27px;font-weight:400;margin:5px 0 0}
+.abiq-weekly-week{font-size:11px;letter-spacing:.13em;border:1px solid #7f5038;border-radius:30px;padding:9px 15px;color:#dfa17d;font-weight:700}
+.abiq-weekly-intro{color:#aca39a;font-size:12px;line-height:1.6;margin:0 0 20px}
+.abiq-weekly-group{margin:18px 0 0}
+.abiq-weekly-group-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:11px;border-bottom:1px solid #413a35;flex-wrap:wrap}
+.abiq-weekly-group-head h3{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:21px;color:#e9ddd1;margin:0}
+.abiq-weekly-group-head span{color:#a99d93;font-size:10px;letter-spacing:.08em}
+.abiq-weekly-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}
+.abiq-weekly-cfb-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.abiq-weekly-card{border-radius:10px;padding:17px 16px 15px;min-width:0;border-left:3px solid #9b6040}
+.abiq-weekly-card-head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.abiq-weekly-source{font-size:10px;color:#dba17d;letter-spacing:.1em;font-weight:700}
+.abiq-weekly-label{font-size:9px;color:#aaa29a;letter-spacing:.08em}
+.abiq-weekly-matchup{display:flex;align-items:center;gap:15px;margin:18px 0 15px;min-width:0}
+.abiq-weekly-logos{display:flex;align-items:center;gap:8px;min-width:80px}
+.abiq-weekly-logos img,.abiq-weekly-logos .abiq-cfb-logo-fallback{width:39px;height:39px;object-fit:contain;flex-shrink:0}
+.abiq-weekly-names{min-width:0}
+.abiq-weekly-names strong{display:block;color:#f2e8de;font-family:Georgia,"Times New Roman",serif;font-weight:500;font-size:20px;overflow-wrap:anywhere}
+.abiq-weekly-names small{display:block;color:#a9a097;font-size:12px;margin-top:4px}
+.abiq-weekly-probability{border-top:1px solid #393633;padding-top:13px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.abiq-weekly-probability strong{font-size:22px;color:#dda17d}
+.abiq-weekly-probability span{font-size:10px;color:#aaa198}
+.abiq-weekly-open{display:block;margin:13px 0 0;padding:9px 11px;border:1px solid #775038;border-radius:6px;color:#e2a27c;background:rgba(180,110,65,.06);cursor:pointer;font:inherit;font-weight:700;font-size:10px;letter-spacing:.06em}
+.abiq-weekly-open:hover,.abiq-weekly-open:focus-visible{background:rgba(180,110,65,.2);outline:1px solid #b17856}
+.abiq-weekly-empty{grid-column:1/-1;border:1px dashed #51473e;border-radius:8px;color:#b8aaa0;padding:20px;font-size:12px;line-height:1.6}
+.abiq-weekly-boundary{margin-top:20px;border-top:1px solid #36322f;padding-top:12px;color:#b3a69b;font-size:11px;line-height:1.65}
+@media(max-width:1200px){.abiq-weekly-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:680px){.abiq-weekly-command{padding:16px 13px}.abiq-weekly-grid,.abiq-weekly-cfb-grid{grid-template-columns:1fr}.abiq-weekly-head h2{font-size:24px}.abiq-weekly-group-head h3{font-size:18px}.abiq-weekly-matchup{gap:12px}.abiq-weekly-names strong{font-size:18px}}

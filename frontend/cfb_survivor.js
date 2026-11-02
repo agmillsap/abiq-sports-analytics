@@ -18,6 +18,19 @@ const CFB_DEMO_TEAMS = {
     ["Washington",1.14],["Wisconsin",1.03]
   ]
 };
+/* ESPN NCAA CDN school IDs; if an image fails, use a readable monogram.
+   No odds API or private ABIQ data is used for logo assets. */
+const CFB_TEAM_LOGO_IDS = {
+  "Alabama":333,"Arkansas":8,"Auburn":2,"Florida":57,"Georgia":61,
+  "Kentucky":96,"LSU":99,"Mississippi State":344,"Missouri":142,
+  "Oklahoma":201,"Ole Miss":145,"South Carolina":2579,"Tennessee":2633,
+  "Texas":251,"Texas A&M":245,"Vanderbilt":238,
+  "Illinois":356,"Indiana":84,"Iowa":2294,"Maryland":120,
+  "Michigan":130,"Michigan State":127,"Minnesota":135,"Nebraska":158,
+  "Northwestern":77,"Ohio State":194,"Oregon":2483,"Penn State":213,
+  "Purdue":2509,"Rutgers":164,"UCLA":26,"USC":30,"Washington":264,
+  "Wisconsin":275
+};
 const CFB_WEEKS = 14;
 const CFB_DEMO_STATE = {conference:"SEC", byConference:{}};
 
@@ -185,6 +198,20 @@ function cfbNode(tag,className,text) {
   return element;
 }
 
+function cfbLogoNode(team) {
+  const logoId=CFB_TEAM_LOGO_IDS[team];
+  const fallback=()=>cfbNode("span","abiq-cfb-logo-fallback",
+    team.split(" ").map(word=>word[0]).slice(0,2).join("").toUpperCase());
+  if(!logoId) return fallback();
+  const img=cfbNode("img","abiq-cfb-logo");
+  img.src="https://a.espncdn.com/i/teamlogos/ncaa/500/"+logoId+".png";
+  img.alt=team+" team logo";
+  img.loading="lazy";
+  img.decoding="async";
+  img.onerror=()=>img.replaceWith(fallback());
+  return img;
+}
+
 function cfbOption(week,team) {
   return CFB_FIXTURES[CFB_DEMO_STATE.conference].byTeam[team]?.[week-1] ?? null;
 }
@@ -283,10 +310,11 @@ function cfbRender(parentElement) {
     button.setAttribute("aria-label","Select "+option.team+" for Week "+s.week);
     button.append(
       cfbNode("span","abiq-cfb-pick-rank",option.outsideRank?"•":index+1),
-      (()=>{const c=cfbNode("span","abiq-cfb-pick-team");c.append(
-        cfbNode("strong","",option.team),
-        cfbNode("small","",(option.home?"vs ":"@ ")+option.opponent)
-      );return c;})(),
+      (()=>{const identity=cfbNode("span","abiq-cfb-pick-identity");
+        const copy=cfbNode("span","abiq-cfb-pick-team");
+        copy.append(cfbNode("strong","",option.team),
+          cfbNode("small","",(option.home?"vs ":"@ ")+option.opponent));
+        identity.append(cfbLogoNode(option.team),copy);return identity;})(),
       cfbNode("span","abiq-cfb-pick-prob",cfbPercent(option.probability)),
       cfbNode("span","abiq-cfb-pick-action",isCurrent?(s.locks[s.week]?"LOCKED":"IN PATH"):"TRY PICK ›")
     );
@@ -311,8 +339,10 @@ function cfbRender(parentElement) {
   const changeList=cfbNode("div","abiq-cfb-impact-list");
   for(const change of s.changes.slice(0,6)) {
     const line=cfbNode("div","abiq-cfb-change");
-    line.append(cfbNode("span","","WK "+change.week),
-      cfbNode("strong","",change.before+"  →  "+change.after));
+    const teams=cfbNode("strong","abiq-cfb-impact-teams");
+    teams.append(cfbLogoNode(change.before),cfbNode("span","",change.before+" → "),
+      cfbLogoNode(change.after),cfbNode("span","",change.after));
+    line.append(cfbNode("span","","WK "+change.week),teams);
     changeList.appendChild(line);
   }
   if(s.changes.length>6) changeList.append(cfbNode("div","abiq-cfb-impact-sub","+"+(s.changes.length-6)+" other changed weeks; all are visible in the season outlook."));
@@ -329,6 +359,7 @@ function cfbRender(parentElement) {
     button.setAttribute("aria-label","View Week "+w+" survivor recommendations");
     button.append(
       cfbNode("span","","WEEK "+w),
+      cfbLogoNode(team),
       cfbNode("strong","",team),
       cfbNode("small","",(game.home?"vs ":"@ ")+game.opponent+" · "+cfbPercent(game.probability))
     );
@@ -352,9 +383,11 @@ function cfbRender(parentElement) {
   const games=fixture.byTeam[s.team];
   const inPath=Object.keys(s.path).find(week=>s.path[week]===s.team);
   const selectedWeek=inPath?Number(inPath):null;
-  area.querySelector("#abiq-cfb-team-summary").textContent =
-    s.team+" · 12 illustrated games and 2 bye weeks · "+
-    (selectedWeek?"reserved for Week "+selectedWeek:"not currently reserved in this path");
+  area.querySelector("#abiq-cfb-team-summary").replaceChildren(
+    cfbLogoNode(s.team),
+    cfbNode("span","",s.team+" · 12 illustrated games and 2 bye weeks · "+
+      (selectedWeek?"reserved for Week "+selectedWeek:"not currently reserved in this path"))
+  );
   const table=cfbNode("table","abiq-cfb-table");
   const thead=cfbNode("thead","");
   const heads=cfbNode("tr","");
@@ -368,8 +401,12 @@ function cfbRender(parentElement) {
     if(!game){
       tr.append(cfbNode("td","","BYE"),cfbNode("td","","—"),cfbNode("td","","No game"));
     } else {
-      tr.append(cfbNode("td","",(game.home?"vs ":"@ ")+game.opponent),
-        cfbNode("td","",cfbPercent(game.probability)));
+      const matchup=cfbNode("td","");
+      const pairing=cfbNode("span","abiq-cfb-table-matchup");
+      pairing.append(cfbLogoNode(game.opponent),
+        cfbNode("span","",(game.home?"vs ":"@ ")+game.opponent));
+      matchup.append(pairing);
+      tr.append(matchup,cfbNode("td","",cfbPercent(game.probability)));
       const status=cfbNode("td","");
       if(s.path[w]===s.team) status.append(cfbNode("strong","","IN PATH"));
       else {
