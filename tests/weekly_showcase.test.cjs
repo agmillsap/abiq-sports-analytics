@@ -12,7 +12,7 @@ const py=fs.readFileSync(path.join(root,"showcase_v3.py"),"utf8");
 const context=vm.createContext({});
 vm.runInContext(cfb.split("// Add the new page")[0]+"\n"+
   weekly.split("// DOM integration")[0]+"\n"+
-  "globalThis.testApi={rows:abiqWeeklyRows,logos:CFB_TEAM_LOGO_IDS,teams:CFB_DEMO_TEAMS,scenarios:cfbScenario,override:cfbOverride,state:CFB_DEMO_STATE,fixtures:CFB_FIXTURES};",
+  "globalThis.testApi={rows:abiqWeeklyRows,logos:CFB_TEAM_LOGO_IDS,teams:CFB_DEMO_TEAMS,scenarios:cfbScenario,override:cfbOverride,optimize:cfbOptimize,state:CFB_DEMO_STATE,fixtures:CFB_FIXTURES};",
   context,{timeout:10000});
 const api=context.testApi;
 const data={recommendations:[
@@ -44,7 +44,7 @@ assert(allTeams.every(name=>Number.isInteger(api.logos[name])),"Each CFB team ne
 const original=first.find(row=>row.conference==="SEC").team;
 api.state.conference="SEC";
 const alternate=api.fixtures.SEC.names.find(team=>team!==original &&
-  api.fixtures.SEC.byTeam[team][0] && !api.fixtures.SEC.byTeam[team][0].error);
+  api.fixtures.SEC.byTeam[team][0] && !api.optimize("SEC",{1:team}).error);
 assert(alternate);
 assert.equal(api.override(1,alternate),true);
 assert.equal(api.rows(1,data).find(row=>row.conference==="SEC").team,alternate);
