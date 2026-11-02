@@ -271,8 +271,8 @@ function cfbRender(parentElement) {
   const currentTeam=s.path[s.week];
   const shortlist=ranked.slice(0,5);
   if(!shortlist.some(option=>option.team===currentTeam)) {
-    shortlist.pop();
-    shortlist.push(cfbOption(s.week,currentTeam));
+    // Keep the genuine top five intact; the locked custom choice is unranked.
+    shortlist.push({...cfbOption(s.week,currentTeam),outsideRank:true});
   }
   const picks=area.querySelector("#abiq-cfb-picks");
   picks.replaceChildren();
@@ -282,7 +282,7 @@ function cfbRender(parentElement) {
     button.type="button";
     button.setAttribute("aria-label","Select "+option.team+" for Week "+s.week);
     button.append(
-      cfbNode("span","abiq-cfb-pick-rank",index+1),
+      cfbNode("span","abiq-cfb-pick-rank",option.outsideRank?"•":index+1),
       (()=>{const c=cfbNode("span","abiq-cfb-pick-team");c.append(
         cfbNode("strong","",option.team),
         cfbNode("small","",(option.home?"vs ":"@ ")+option.opponent)
