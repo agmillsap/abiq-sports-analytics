@@ -51,7 +51,7 @@ def _read_text(path: Path) -> str:
 def _showcase_html() -> str:
     """Inject the public CFB prototype inside the existing Showcase page shell."""
     source = _read_text(FRONTEND / "showcase_exec.html")
-    closing = "  </main>\\n</div>"
+    closing = "  </main>\n</div>"
     if source.count(closing) != 1:
         raise ValueError("Showcase main-page insertion point changed.")
     return source.replace(closing, _read_text(FRONTEND / "cfb_survivor.html") + closing)
@@ -255,7 +255,7 @@ SHOWCASE_COMPONENT = st.components.v2.component(
         + _read_text(FRONTEND / "slate_confidence_profile.css")
         + "\n"
         + _read_text(FRONTEND / "forecast_page_v2.css")
-        + "\\n"
+        + "\n"
         + _read_text(FRONTEND / "cfb_survivor.css")
     ),
     js=(
@@ -266,7 +266,7 @@ SHOWCASE_COMPONENT = st.components.v2.component(
         + _read_text(FRONTEND / "slate_confidence_profile.js")
         + "\n"
         + _read_text(FRONTEND / "forecast_page_v2.js")
-        + "\\n"
+        + "\n"
         + _read_text(FRONTEND / "cfb_survivor.js")
     ),
     isolate_styles=True,
