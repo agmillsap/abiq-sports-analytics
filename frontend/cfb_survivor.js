@@ -252,8 +252,22 @@ function cfbRender(parentElement) {
     cfbMetric("ILLUSTRATIVE PICK AVERAGE",cfbPercent(s.average),"Example inputs only · not model performance")
   );
 
+  // A weekly recommendation is ranked by its best feasible full-season path,
+  // not by win percentage alone. This also excludes previously used teams.
+  const otherLocks={...s.locks};
+  delete otherLocks[s.week];
+  for(let w=1;w<s.week;w++) otherLocks[w]=s.path[w];
   const ranked=fixture.names.map(team=>fixture.byTeam[team][s.week-1])
-    .filter(Boolean).sort((a,b)=>b.probability-a.probability);
+    .filter(Boolean)
+    .map(option=>{
+      const trial=cfbOptimize(conference,{...otherLocks,[s.week]:option.team});
+      if(trial.error) return null;
+      const strategyScore=Object.entries(trial.path).reduce((sum,[week,team])=>
+        sum+Math.log(fixture.byTeam[team][Number(week)-1].probability),0);
+      return {...option,strategyScore};
+    })
+    .filter(Boolean)
+    .sort((a,b)=>b.strategyScore-a.strategyScore || b.probability-a.probability);
   const currentTeam=s.path[s.week];
   const shortlist=ranked.slice(0,5);
   if(!shortlist.some(option=>option.team===currentTeam)) {
