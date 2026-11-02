@@ -1,0 +1,22 @@
+name: CFB Survivor Showcase contract
+
+on:
+  pull_request:
+  push:
+    branches: [main, feature/cfb-survivor-scenario-showcase]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify synthetic schedules and scenario optimizer
+        run: node tests/cfb_survivor.test.cjs
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile public Streamlit entry points
+        run: python -m py_compile app.py showcase_v3.py
