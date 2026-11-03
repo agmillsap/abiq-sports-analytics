@@ -41,7 +41,7 @@ h1{font-size:24px;margin-bottom:10px}p{color:#62738a;line-height:1.5}.loading{fo
     '  return page.replace(/<\\/head>/i,\'<style id="portfolio-sidebar-branding">\'+css+\'</style></head>\');',
     '}',
     'async function getDemo(key){if(CACHE[key])return CACHE[key];CACHE[key]=stripSidebarBranding(key,await unpack(PACKED[key].data));return CACHE[key]}'
-  ].join('\\n');
+  ].join('\n');
   if(!html.includes(demoDecoder))throw new Error('Demo integration format has changed; the original dashboard was not modified.');
   const branded=html.replace(demoDecoder,demoDecoderWithBranding);
   const integrated=branded
